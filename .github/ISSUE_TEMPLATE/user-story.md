@@ -2,7 +2,7 @@
 name: User Story
 about: To quickly add new user stories.
 title: As a ... , I want ... , so ...
-labels: 'usert story'
+labels: user story
 assignees: ''
 
 ---
