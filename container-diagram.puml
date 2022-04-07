@@ -1,0 +1,25 @@
+@startuml C4_Elements
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+LAYOUT_WITH_LEGEND()
+
+Person(user, "Cleaning service", "The people who clean up litter.")
+
+System_Ext(jetson, "IOT sensors", "Provides litter detection data.")
+
+System_Boundary(boundry, "LITR-heatmap"){
+	Container(spa, "Single-Page Application", "React + TypeScript", "Provides a heatmap via the web browser.")
+	
+	Container(api, "API", "Next.js + Prisma ORM", "Retrieves and writes the heatmap data.")
+
+	ContainerDb(db, "Database", "PostgreSQL", "Stores the heatmap data.")
+}
+
+Rel_D(user, spa, "Views the heatmap")
+
+Rel_D(spa, api, "Makes API calls to", "JSON/HTTPS")
+
+Rel_D(jetson, api, "Makes API calls to", "JSON/HTTPS")
+
+Rel_D(api, db, "Reads from and writes to.")
+@enduml
