@@ -1,0 +1,8 @@
+# envorinment variables
+*.env
+
+# datasets
+LITR*/
+
+# models
+yolov5
