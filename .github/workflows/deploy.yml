@@ -1,4 +1,4 @@
-name: client CI/CD
+name: deploy
 
 on:
   workflow_dispatch:
