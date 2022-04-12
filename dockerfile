@@ -16,6 +16,7 @@ COPY . .
 
 ARG DATABASE_URL
 
+RUN npx prisma db push
 RUN npx prisma generate
 
 # Next.js collects completely anonymous telemetry data about general usage.
