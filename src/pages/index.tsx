@@ -4,7 +4,7 @@ import type { NextPage } from 'next'
 export async function getStaticProps() {
   const prisma = new PrismaClient()
   const detections = await prisma.detection.findMany()
-  console.log(detections)
+
   return {
     props : { detections }
   }
