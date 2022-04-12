@@ -23,7 +23,7 @@ jobs:
 
       - name: Build Docker image
         run: docker build -t registry.heroku.com/${{ secrets.HEROKU_APP }}/web:latest 
-          --build-arg DB_USERNAME=${{ secrets.DATABASE_URL }} .
+          --build-arg DATABASE_URL=${{ secrets.DATABASE_URL }} .
         
       - name: Docker image info
         run: docker images
