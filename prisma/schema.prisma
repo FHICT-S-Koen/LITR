@@ -9,3 +9,13 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Detection {
+  id         Int        @id @default(autoincrement())
+  detectedAt DateTime
+  objects    Int
+  types      String
+  lat        Float
+  lon        Float
+  picture    String
+}
