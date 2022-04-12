@@ -25,9 +25,10 @@ type Props = {
 
 const Home: React.FC<Props> = (props) => {
 
-  return <div>
+  return <div className="bg-black text-white">
     {props.detections.map((detection) => (
-      <div key={detection.id}>{detection.id}</div>) )}
+      <div key={detection.id}>{detection.id}</div>) 
+    )}
   </div>
 }
 
