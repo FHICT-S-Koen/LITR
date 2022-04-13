@@ -12,7 +12,7 @@ datasource db {
 
 model Detection {
   id         Int        @id @default(autoincrement())
-  // detectedAt DateTime
+  detectedAt String
   objects    Int
   types      String
   lat        Float
