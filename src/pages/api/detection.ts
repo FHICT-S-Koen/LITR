@@ -1,13 +1,20 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { DetectionProps } from '../../components/Detection'
+import { prisma } from '../../db'
 
-type Data = {
-  name: string
+type Error = {
+  error: string
 }
 
-export default function handler(
+export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data>
+  res: NextApiResponse<DetectionProps | Error>
 ) {
-  res.status(200).json({ name: 'John Doe' })
+  const x = req.body as DetectionProps
+  if (req.method === 'POST') {
+    const detection = await prisma.detection.create({data: {...x}})
+    res.status(201).json(detection)
+  } else {
+    res.status(404).json({error: '404 error'})
+  }
 }
