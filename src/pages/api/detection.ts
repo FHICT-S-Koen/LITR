@@ -1,9 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { PrismaClientValidationError } from '@prisma/client/runtime'
 import { DetectionProps } from '../../components/Detection'
 import { prisma } from '../../db'
 
-type Error = {
-  error: string
+interface Error {
+  message: string
+  errors?: { field: string, message: string }[]
+  stack?: string
 }
 
 export default async function handler(
@@ -12,18 +15,19 @@ export default async function handler(
 ) {
   try {
     const body = req.body as DetectionProps
-    if (req.headers['authorization'] === process.env.SECRET_KEY) {
-      if (req.method === 'POST') {
-        const detection = await prisma.detection.create({ data: { ...body } })
-        res.status(201).json(detection)
-      } else {
-        res.status(404).json({ error: '404 error' })
-      }
-    } else {
-      res.status(401).json({ error: '401 error' })
-    }
+
+    if (req.method !== 'POST')
+      return res.status(405).json({ message: `Request method '${req.method}' not supported` })
+
+    if (req.headers['authorization'] !== process.env.SECRET_KEY)
+      return res.status(401).json({ message: 'Invalid authorization token' })
+
+    return res.status(201).json(await prisma.detection.create({ data: { ...body } }))
   }
   catch (err) {
-    res.status(500).json({ error: '500 error' })
+    if (err instanceof PrismaClientValidationError)
+      return res.status(400).json({ message: err.message })
+    else
+      return res.status(500).json({ message: 'Internal server error' })
   }
 }

@@ -1,4 +1,4 @@
-type DetectionProps = {
+interface DetectionProps {
 	id: number
 	detectedAt: string
 	objects: number
@@ -23,7 +23,6 @@ const Detection = (props: DetectionProps) => {
 			</p>
 		</div>
 	</div>
-
 }
 
 export type { DetectionProps }
