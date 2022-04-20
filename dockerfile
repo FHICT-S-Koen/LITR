@@ -15,6 +15,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 ARG DATABASE_URL
+ARG SECRET_KEY
 
 RUN npx prisma db push
 RUN npx prisma generate
