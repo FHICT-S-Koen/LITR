@@ -7,7 +7,7 @@ class Detection:
         self.picture = picture
 
 class Object:
-    def __init__(self, type, probability, xMin, yMin, xMax, yMax) -> None:
+    def __init__(self, type, probability, xMin, yMin, xMax, yMax):
         self.type = type
         self.probability = probability
         self.xMin = xMin
