@@ -1,5 +1,6 @@
 dockerfile
 .dockerignore
+.Dockerignore
 node_modules
 npm-debug.log
 README.md
