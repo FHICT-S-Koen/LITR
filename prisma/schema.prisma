@@ -11,17 +11,21 @@ datasource db {
 }
 
 model Detection {
-  id         Int        @id @default(autoincrement())
+  id         Int      @id @default(autoincrement())
+  objects    Object[]
   detectedAt String
-  objects    Int
-  types      String
   lat        Float
   lon        Float
   picture    String
 }
 
-// Image of litter
-// Litter type
-// Litter location
-// Bounding-box
-// Timestamp
+model Object {
+  id          Int       @id @default(autoincrement())
+  type        String
+  probability Float
+  xMin        Float
+  yMin        Float
+  xMax        Float
+  yMax        Float
+  detection   Detection @relation(fields: [id], references: [id])
+}
