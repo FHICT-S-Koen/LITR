@@ -13,7 +13,7 @@ datasource db {
 model Detection {
   id         Int      @id @default(autoincrement())
   objects    Object[]
-  detectedAt Float
+  detectedAt String
   lat        Float
   lon        Float
   picture    String
