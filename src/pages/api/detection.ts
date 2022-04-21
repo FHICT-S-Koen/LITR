@@ -14,15 +14,22 @@ export default async function handler(
   res: NextApiResponse<DetectionProps | Error>
 ) {
   try {
-    const body = req.body as DetectionProps
+    const body = JSON.parse(req.body) as DetectionProps
 
     if (req.method !== 'POST')
       return res.status(405).json({ message: `Request method '${req.method}' not supported` })
 
     if (req.headers['authorization'] !== process.env.SECRET_KEY)
       return res.status(401).json({ message: 'Invalid authorization token' })
-
-    return res.status(201).json(await prisma.detection.create({ data: { ...body } }))
+    const detection = await prisma.detection.create({ data: {
+      objects: {},
+      detectedAt: body.detectedAt,
+      lat: body.lat,
+      lon: body.lat,
+      picture: body.picture
+    } })
+    // console.log(detection)
+    return res.status(201).json({message: JSON.stringify(detection)})
   }
   catch (err) {
     if (err instanceof PrismaClientValidationError)

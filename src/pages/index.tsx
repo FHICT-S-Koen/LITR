@@ -2,7 +2,11 @@ import Detection, { DetectionProps } from '../components/Detection'
 import { prisma } from '../db'
 
 export async function getServerSideProps() {
-  const detections = await prisma.detection.findMany()
+  const detections = await prisma.detection.findMany({
+    include: {
+      objects: true
+    },
+  })
 
   return {
     props : { detections }
