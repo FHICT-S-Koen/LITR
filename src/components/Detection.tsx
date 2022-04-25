@@ -1,21 +1,20 @@
 interface DetectionProps {
 	id: number
-	objects: Object[]
+	objects: {
+			id: number
+			detection: DetectionProps
+  			objectId: number
+			type: string
+			probability: number
+			xMin: number
+			yMin: number
+			xMax: number
+			yMax: number
+		}[]
 	detectedAt: string
 	lat: number
 	lon: number
 	picture: string
-}
-
-interface Object {
-	id: number
-	type: string
-	probability: number
-	xMin: number
-	yMin: number
-	xMax: number
-	yMax: number
-	detection: DetectionProps
 }
 
 const Detection = (props: DetectionProps) => {
