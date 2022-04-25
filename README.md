@@ -7,5 +7,5 @@ Our client is Erac, a consultancy firm in the field of regional economy and ener
 Erac wants us to explore the possibilities of using machine learning to detect litter or the cause of litter. At the end of this project the client wants us to present our findings in form of a prototype or document.
 
 ## Software system
-![container-diagram](/diagrams/container-diagram/C4_Elements.png)
+![container-diagram](/diagrams/out/container-diagram/C4_Elements.png)
 
