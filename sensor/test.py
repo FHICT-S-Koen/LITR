@@ -6,7 +6,7 @@ import numpy as np
 import cv2
 import datetime 
 import requests
-from objects import Detection, Object
+from objects import Detection
 
 # Load Model (yolov5s)
 model = torch.hub.load('ultralytics/yolov5', 'yolov5s')
