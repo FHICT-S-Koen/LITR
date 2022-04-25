@@ -21,6 +21,7 @@ model Detection {
 
 model Object {
   id          Int       @id @default(autoincrement())
+  detection   Detection @relation(fields: [objectId], references: [id])
   objectId    Int
   type        String
   probability Float
@@ -28,5 +29,4 @@ model Object {
   yMin        Float
   xMax        Float
   yMax        Float
-  detection   Detection @relation(fields: [objectId], references: [id])
 }

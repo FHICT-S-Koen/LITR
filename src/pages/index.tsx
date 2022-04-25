@@ -1,34 +1,27 @@
-import { PrismaClient } from '@prisma/client'
-import type { NextPage } from 'next'
+import Detection, { DetectionProps } from '../components/Detection'
+import { prisma } from '../db'
 
-export async function getStaticProps() {
-  const prisma = new PrismaClient()
-  const detections = await prisma.detection.findMany()
+export async function getServerSideProps() {
+  const detections = await prisma.detection.findMany({
+    include: {
+      objects: true
+    },
+  })
 
   return {
     props : { detections }
   }
 }
 
-export type DetectionProps = {
-  id: number;
-  objects: number;
-  types: string;
-  lat: number;
-  lon: number;
-  picture: string;
-};
-
 type Props = {
-  detections: DetectionProps[];
-};
+  detections: DetectionProps[]
+}
 
 const Home: React.FC<Props> = (props) => {
 
-  return <div className="bg-black text-white">
-    {props.detections.map((detection) => (
-      <div key={detection.id}>{detection.id}</div>) 
-    )}
+  return <div className="flex flex-wrap justify-center p-2 gap-5">
+    {props.detections.map((detection) =>
+    <Detection key={detection.id} {...detection} />)}
   </div>
 }
 
