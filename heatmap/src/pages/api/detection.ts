@@ -1,17 +1,16 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { PrismaClientValidationError } from '@prisma/client/runtime'
 import { DetectionProps } from '../../components/Detection'
 import { prisma } from '../../db'
+import { PrismaClientValidationError } from '@prisma/client/runtime'
 
 interface Error {
   message: string
-  errors?: { field: string, message: string }[]
-  stack?: string
+  stacktrace?: string
 }
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<DetectionProps | Error>
+  res: NextApiResponse<string | Error>
 ) {
   try {
     if (req.method !== 'POST')
@@ -20,28 +19,32 @@ export default async function handler(
     if (req.headers['authorization'] !== process.env.SECRET_KEY)
       return res.status(401).json({ message: 'Invalid authorization token' })
 
-    const body = JSON.parse(req.body) as DetectionProps
+    if (req.headers['content-type'] !== 'application/json')
+      return res.status(415).json({ message: `Content-type '${req.headers['content-type']}' not supported` })
 
-    const data = {
-      objects: {
-        createMany: {
-          data: body.objects
-        }
-      },
-      detectedAt: body.detectedAt,
-      lat: body.lat,
-      lon: body.lon,
-      picture: body.picture
-    }
+    const body: DetectionProps = req.body
 
-    const detection = await prisma.detection.create({data})
+    const detection = await prisma.detection.create({
+      data: {
+        objects: {
+          createMany: {
+            data: body.objects
+          }
+        },
+        detectedAt: body.detectedAt,
+        lat: body.lat,
+        lon: body.lon,
+        picture: body.picture
+      }
+    })
 
-    return res.status(201).json({ message: JSON.stringify(detection) })
+    return res.status(201).json(JSON.stringify(detection))
   }
-  catch (err) {
+  catch (err: any) {
+    const stacktrace = process.env.NODE_ENV == "development" ? err.message : undefined
     if (err instanceof PrismaClientValidationError)
-      return res.status(400).json({ message: err.message }) //TODO: check for validation when parsing body
+      return res.status(400).json({ message: 'Bad request', stacktrace })
     else
-      return res.status(500).json({ message: 'Internal server error' })
+      return res.status(500).json({ message: 'Internal server error', stacktrace })
   }
 }
