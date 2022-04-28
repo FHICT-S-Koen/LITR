@@ -46,7 +46,7 @@ def detect(model, API_URL: str, SECRET_KEY: str):
 
 		data = json.dumps(Detection(objects, detectedAt, lat, lon, "picture" ).__dict__)
 
-		res = requests.post(API_URL, data=data, headers={"Authorization": SECRET_KEY})
+		res = requests.post(API_URL, data=data, headers={"Authorization": SECRET_KEY, "Content-Type": "application/json"})
 		# print(res.text)
 		isRunning = False
 
