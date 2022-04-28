@@ -20,6 +20,6 @@ ENV PATH="/usr/local/cuda/bin:${PATH}"
 ENV LD_LIBRARY_PATH="/usr/local/cuda/lib64:${LD_LIBRARY_PATH}"
 RUN echo "$PATH" && echo "$LD_LIBRARY_PATH"
 
-COPY main.py main.py
+COPY src src
 
 ENTRYPOINT [ "python3.8", "main.py" ]

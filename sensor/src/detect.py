@@ -1,5 +1,7 @@
 import json
 import cv2
+from matplotlib import pyplot as plt
+import numpy as np
 import datetime 
 import requests
 
@@ -13,19 +15,21 @@ def detect(model, API_URL: str, SECRET_KEY: str):
 	isRunning = True
 
 	while isRunning:
-		ret, frame = cap.read()    
+		ret, frame = cap.read()
+		print("aoisjdowjodjowajdjwaijdoiwajoijdoiwajdwaoidjo", frame)
 
 		# Make detections 
 		results = model(frame)
 
-		# cv2.imshow('YOLOv5s', np.squeeze(results.render()))
+		cv2.imshow('YOLOv5s', np.squeeze(results.render()))
 
 		# time location littertype probability image(frames) bounding box
 		objects = []
 		detectedAt = datetime.datetime.now().strftime("%c")
 		lat = 00.00
-		lon = 00.00   
+		lon = 00.00
 		picture = results.render()
+		print(picture)
 
 		for n in results.xyxyn[0]:
 			classIndex = int(n[5])
