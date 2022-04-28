@@ -1,9 +1,5 @@
-
-from matplotlib.font_manager import json_dump
-import torch
-
-
 import os
+import torch
 from dotenv import load_dotenv
 
 from detect import detect
