@@ -4,12 +4,12 @@ interface DetectionProps {
 			id: number
 			detection: DetectionProps
   			objectId: number
-			type: string
-			probability: number
 			xMin: number
 			yMin: number
 			xMax: number
 			yMax: number
+			confidence: number
+			type: string
 		}[]
 	detectedAt: string
 	lat: number
