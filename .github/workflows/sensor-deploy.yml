@@ -8,6 +8,9 @@ on:
 jobs: 
   build-and-deploy:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: sensor
     steps:
       - uses: actions/checkout@v2
         with:

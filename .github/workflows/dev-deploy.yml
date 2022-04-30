@@ -9,6 +9,9 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     environment: develop
+    defaults:
+      run:
+        working-directory: heatmap
     steps:
       - uses: actions/checkout@v2
         with:
