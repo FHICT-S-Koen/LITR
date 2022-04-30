@@ -1,19 +1,18 @@
-import os
 import torch
-from dotenv import load_dotenv
+import requests
+import cv2
+import torch
+import numpy as np
+from matplotlib import pyplot as plt
 
-from detect import detect
+# our modules
+import sensor
+import detection
+import _utils
 
 # setting device on GPU if available, else CPU
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print('Using device:', device, '\n')
-
-#Additional Info when using cuda
-# if device.type == 'cuda':
-#     print(torch.cuda.get_device_name(0))
-#     print('Memory Usage:')
-#     print('Allocated:', round(torch.cuda.memory_allocated(0)/1024**3,1), 'GB')
-#     print('Cached:   ', round(torch.cuda.memory_reserved(0)/1024**3,1), 'GB')
 
 # Load Model (yolov5s)
 model = torch.hub.load('ultralytics/yolov5', 'yolov5s')
@@ -24,12 +23,40 @@ model.conf = 0.30
 # Only detect bottles
 model.classes = [39]
 
-load_dotenv() # DO NOT PRINT OUT THE ENVIRONMENT VARIABLES since the output may be saved, because of Jupyter notebook and then may be pushed to github excedentally
+# Get environment variables
+API_URL, SECRET_KEY = _utils.get_env(['API_URL', 'SECRET_KEY'])
 
-API_URL = os.getenv('API_URL')
-if API_URL is None: raise Exception("API_URL can't be empty")
+# Start videocapture
+cap = cv2.VideoCapture(0)
 
-SECRET_KEY = os.getenv('SECRET_KEY')
-if SECRET_KEY is None: raise Exception("SECRET_KEY can't be empty")
+# --------------------- START DETECTING ------------------------ #
+while cap.isOpened():
+	ret, frame = cap.read()
 
-detect(model, API_URL, SECRET_KEY)
+	# Check frame for objects
+	results = model(frame)
+
+	# Show results in window
+	# cv2.imshow('YOLOv5s', np.squeeze(results.render()))
+
+	# Reformat results to pandas dataframe
+	df = results.pandas().xyxy[0]
+
+	# If empty continue with next frame
+	# else send detection data
+	if (df.empty): continue
+
+	lat, lon = sensor.get_location()
+	res = requests.post(
+		url=API_URL, 
+		data=detection.Detection(df, lat, lon, frame).json_serialize(), 
+		headers={"Authorization": SECRET_KEY, "Content-Type": "application/json"})
+
+	print("data send")
+	# print(res.text)
+
+	if cv2.waitKey(10) & 0xFF == ord('q'):
+		break
+
+cap.release()
+cv2.destroyAllWindows()
