@@ -20,7 +20,7 @@ interface DetectionProps {
 const Detection = (props: DetectionProps) => {
 
 	return <div className="bg-white rounded-lg border shadow-md max-w-xs md:max-w-none overflow-hidden">
-		{/* <img className="h-56 lg:h-60 w-56 object-fill" src={props.picture} alt="" /> */}
+		<img className="h-56 lg:h-60 w-56 object-fill" src={'data:image/png;base64,' + props.picture} alt="image" />
 		<div className="p-3">
 			<span className="text-sm text-primary">Detected at: {props.detectedAt}</span>
 			<h3 className="font-semibold text-xl leading-6 text-gray-700 my-2">
