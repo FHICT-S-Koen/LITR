@@ -1,6 +1,3 @@
 # local env files
 *.local
 .env
-
-# python
-__pycache__
