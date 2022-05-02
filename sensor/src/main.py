@@ -7,7 +7,7 @@ from matplotlib import pyplot as plt
 
 # our modules
 import sensor
-import detection
+from detection import Detection 
 import _utils
 
 # setting device on GPU if available, else CPU
@@ -28,6 +28,7 @@ API_URL, SECRET_KEY = _utils.get_env(['API_URL', 'SECRET_KEY'])
 
 # Start videocapture
 cap = cv2.VideoCapture(0)
+count = 0
 
 # --------------------- START DETECTING ------------------------ #
 while cap.isOpened():
@@ -49,10 +50,11 @@ while cap.isOpened():
 	lat, lon = sensor.get_location()
 	res = requests.post(
 		url=API_URL, 
-		data=detection.Detection(df, lat, lon, frame).json_serialize(), 
+		data=Detection(df, lat, lon, frame).json_serialize(), # To get the image with bounding box use: results.render()[0]
 		headers={"Authorization": SECRET_KEY, "Content-Type": "application/json"})
-
-	print("data send")
+	
+	count += 1
+	print(f'{count} data send')
 	# print(res.text)
 
 	if cv2.waitKey(10) & 0xFF == ord('q'):
