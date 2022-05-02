@@ -1,8 +1,7 @@
 import json
 import datetime
 import base64
-from io import BytesIO
-from PIL import Image
+import cv2
 
 class Detection:
     def __init__(self, df, lat, lon, bitmap):
@@ -21,10 +20,11 @@ class Detection:
         return df.to_dict(orient='records')
 
     def encode_bitmap_to_base64(self, bitmap):
-        buffered = BytesIO()
-        img_base64 = Image.fromarray(bitmap)
-        img_base64.save(buffered, format="JPEG")
-        return base64.b64encode(buffered.getvalue()).decode('utf-8')
+        _, buffer = cv2.imencode(
+            '.jpg', bitmap, 
+            [cv2.IMWRITE_JPEG_QUALITY, 80]
+        ) # for more info about quality see https://docs.opencv.org/3.4/d8/d6a/group__imgcodecs__flags.html
+        return base64.b64encode(buffer).decode('utf-8')
 
     def json_serialize(self):
         return json.dumps(self.__dict__)
