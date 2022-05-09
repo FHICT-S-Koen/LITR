@@ -32,6 +32,8 @@ count = 0
 
 # --------------------- START DETECTING ------------------------ #
 while cap.isOpened():
+	if cv2.waitKey(10) & 0xFF == ord('h'):
+		break
 	ret, frame = cap.read()
 
 	# Check frame for objects
@@ -57,8 +59,6 @@ while cap.isOpened():
 	print(f'{count} data send')
 	# print(res.text)
 
-	if cv2.waitKey(10) & 0xFF == ord('q'):
-		break
 
 cap.release()
 cv2.destroyAllWindows()
