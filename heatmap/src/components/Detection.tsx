@@ -48,13 +48,23 @@ const Detection = (props: DetectionProps) => {
 
 		if (!showBoxesRef.current) return
 		context.beginPath()
-		props.objects.map(o => context.rect(o.xMin, o.yMin, o.xMax - o.xMin, o.yMax - o.yMin))
+		props.objects.map(o => {
+			context.strokeStyle = "red"
+			context.fillStyle = "red"
+			context.font = "24px arial-mono"
+			context.lineWidth = 5
+			const labelText = o.type + " " + Math.round(o.confidence * 100) + "%"
+			context.fillRect(o.xMin, o.yMin - 28, context.measureText(labelText).width, 30)
+			context.fillStyle = "white"
+			context.fillText(labelText, o.xMin, o.yMin - 8)
+			context.rect(o.xMin, o.yMin, o.xMax - o.xMin, o.yMax - o.yMin)
+		})
 		context.stroke()
 	}
 
 	return <Marker position={[props.lat, props.lon]} eventHandlers={{click: onClick}}>
 		<Popup>
-			<canvas className="w-56 h-56" width={500} height={500} ref={canvasRef}></canvas>
+			<canvas className="w-full h-full" width={500} height={500} ref={canvasRef}></canvas>
 			<button onClick={() => {setShowBoxes(!showBoxes), onClick()}}>show</button>
 			<div className="p-3">
 				<span className="text-sm text-primary">Detected at: {props.detectedAt}</span>
