@@ -1,7 +1,6 @@
 import torch
 import requests
 import cv2
-import torch
 import numpy as np
 from matplotlib import pyplot as plt
 
