@@ -14,8 +14,8 @@ model Detection {
   id         Int      @id @default(autoincrement())
   objects    Object[]
   detectedAt String
-  lat        Float
-  lon        Float
+  lat        Float?
+  lon        Float?
   picture    String
 }
 
