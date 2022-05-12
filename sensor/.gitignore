@@ -1,0 +1,9 @@
+# local env files
+*.local
+.env
+
+# python
+__pycache__
+
+# torch
+*.pt

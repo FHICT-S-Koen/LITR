@@ -1,6 +1,6 @@
 # Building the dockerfile
 ```
-docker build -t siem228/litr:latest -f ultralytics.Dockerfile .
+docker build -t siem228/litr:latest -f dockerfile .
 docker push siem228/litr:latest
 ```
 

@@ -3,24 +3,19 @@ name: deploy develop
 on:
   workflow_dispatch: 
     branches: [ develop ]
+    paths: [ heatmap/** ]
 
 jobs: 
   build-and-deploy:
     runs-on: ubuntu-latest
     environment: develop
+    defaults:
+      run:
+        working-directory: heatmap
     steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      # - uses: actions/setup-node@v2
-      #   with: 
-      #     node-version: 16
-      
-      # - name: Install node-modules
-      #   run: npm ci
-
-      # - name: Build
-      #   run: npm run build
 
       - name: Build Docker image
         run: docker build -t registry.heroku.com/${{ secrets.HEROKU_APP }}/web:latest 

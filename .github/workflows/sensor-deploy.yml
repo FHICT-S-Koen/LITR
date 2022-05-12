@@ -1,0 +1,24 @@
+name: deploy sensor
+
+on:
+  workflow_dispatch: 
+    branches: [ production ]
+    paths: [ sensor/** ]
+
+jobs: 
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: sensor
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Build Docker image
+
+      - name: Docker image info
+        run: docker images
+
+      - name: Push Docker image
