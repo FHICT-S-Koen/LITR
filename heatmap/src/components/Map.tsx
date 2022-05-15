@@ -5,7 +5,7 @@ import "leaflet-defaulticon-compatibility";
 import { FC } from 'react';
 
 import Detection, { DetectionProps } from './Detection'
-import SearchBar from './SearchBar';
+import Search from './Search/Search';
 
 
 interface MapProps {
@@ -16,8 +16,8 @@ interface MapProps {
 const Map: FC<MapProps> = ({ detections }) => {
 
 	// 51.4415968, 5.4696465
-	return <MapContainer center={[0, 0]} zoom={13} scrollWheelZoom={true} className="h-screen z-1">
-		<SearchBar></SearchBar>
+	return <MapContainer center={[52.1009, 5.6463]} zoom={9} scrollWheelZoom={true} className="h-screen z-1">
+		<Search />
 		<TileLayer
 			attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 			url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
