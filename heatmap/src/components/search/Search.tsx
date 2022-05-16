@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useContext, useEffect } from 'react'
+import React, { ChangeEvent, FC, useContext } from 'react'
 import { LatLngTuple } from 'leaflet'
 
 interface OptionProps {

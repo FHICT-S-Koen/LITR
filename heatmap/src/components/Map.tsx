@@ -3,7 +3,7 @@ import 'leaflet/dist/leaflet.css'
 import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css'
 import "leaflet-defaulticon-compatibility";
 
-import MapHelper from './search/MapHelper';
+import MapProvider from './search/MapProvider';
 import { useContext, useEffect } from 'react';
 import { Context } from '../pages/Store';
 import Detection from './Detection';
@@ -21,7 +21,7 @@ const Map = () => {
 	}, [])
 
 	return <MapContainer center={[52.1009, 5.6463]} zoom={9} scrollWheelZoom={true} className="h-screen">
-		<MapHelper />
+		<MapProvider />
 		{store.state.detections?.map(d => <Detection key={d.id} {...d} />)}
 		<TileLayer
 			attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
