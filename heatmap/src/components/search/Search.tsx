@@ -21,7 +21,7 @@ const Search: FC<{options: OptionProps[]}> = ({options}) => {
     <input 
       onChange={handleChange}
       placeholder='Enter Location'
-      className='absolute z-[999] left-1/2 -translate-x-1/2 px-3 py-1.5 text-gray-700 border border-gray-300 rounded focus:border-blue-600 outline-none'
+      className='absolute z-[999] left-1/2 -translate-x-1/2 mt-2 px-3 py-1.5 text-gray-700 border border-gray-300 rounded focus:border-blue-600 outline-none'
       list="municipalities" />
       <datalist id="municipalities">
         {options.map((m, i) => <option key={i} value={m.name}>{m.name}</option>)}
