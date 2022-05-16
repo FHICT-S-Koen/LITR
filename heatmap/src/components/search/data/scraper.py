@@ -28,10 +28,11 @@ def get_municipality_coords_url(municipality, suffixes, response_codes):
             response_codes.append(response.status_code)
     return coords_url, response_codes
 
-for x in df[['Municipality[a]']].values.tolist():
+for x in df[['Municipality[a]', 'Land area[d][26]']].values.tolist():
     municipality = x[0]
     municipality = municipality.replace(" (LI)", ",_Limburg")
     municipality = municipality.replace(" (NH)", ",_North_Holland")
+    area = x[1][slice(x[1].index('km2')-1)]
     response_codes = []
 
     try: 
@@ -42,9 +43,9 @@ for x in df[['Municipality[a]']].values.tolist():
         lat = soup.find('span', {'class': "p-latitude"}).text
         lon = soup.find('span', {'class': "p-longitude"}).text
 
-        ls.append({'name': x[0], 'coords': [lat, lon]})
+        ls.append({'name': x[0], 'coords': [lat, lon], 'area': area})
 
-        print(Fore.LIGHTWHITE_EX, "["+" ".join(str(code) for code in response_codes) + f"] {municipality} - ({lat}, {lon}): successfully added")
+        print(Fore.LIGHTWHITE_EX, "["+" ".join(str(code) for code in response_codes) + f"] {municipality} - ({lat}, {lon}, {area}): successfully added")
 
     except:
         m = municipality.replace(" ", "_")
