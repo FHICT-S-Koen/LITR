@@ -1,4 +1,4 @@
-import React from "react"
+import React, { FC } from "react"
 import { useRef, useState } from "react"
 import { Marker, Popup } from "react-leaflet"
 
@@ -21,11 +21,10 @@ interface DetectionProps {
 	picture: string
 }
 
-const Detection = (props: DetectionProps) => {
-
+const Detection: FC<DetectionProps> = (props) => {
+	const {objects, detectedAt,	lat, lon, picture} = props
 
 	const canvasRef = React.createRef<HTMLCanvasElement>();
-	// const canvasRef = useRef<HTMLCanvasElement>()
 	
 	const [showBoxes, _setShowBoxes] = useState(false)
 	const showBoxesRef = useRef(showBoxes)
@@ -35,15 +34,13 @@ const Detection = (props: DetectionProps) => {
 	}
 
 	const onClick = () => {
-		console.log("test1")
 		if (!canvasRef.current) return
 		const canvas = canvasRef.current
 		const context = canvas.getContext('2d')
 		if (!context) return
-		console.log("test2")
 
 		const image = new Image()
-		image.src = 'data:image/png;base64,' + props.picture
+		image.src = 'data:image/png;base64,' + picture
 		context.drawImage(image, 0, 0)
 
 		if (!showBoxesRef.current) return
@@ -62,23 +59,22 @@ const Detection = (props: DetectionProps) => {
 		context.stroke()
 	}
 
-	return <Marker position={[props.lat, props.lon]} eventHandlers={{click: onClick}}>
+	return <Marker position={[lat, lon]} eventHandlers={{click: onClick}}>
 		<Popup>
 			<canvas className="w-full h-full" width={500} height={500} ref={canvasRef}></canvas>
 			<button onClick={() => {setShowBoxes(!showBoxes), onClick()}}>show</button>
 			<div className="p-3">
-				<span className="text-sm text-primary">Detected at: {props.detectedAt}</span>
+				<span className="text-sm text-primary">Detected at: {detectedAt}</span>
 				<h3 className="font-semibold text-xl leading-6 text-gray-700 my-2">
-					Types of litter: {props.objects.map(e => e.type)} <br></br>
-					Number of detected objects: {props.objects.length}
+					Types of litter: {objects.map(e => e.type)} <br></br>
+					Number of detected objects: {objects.length}
 				</h3>
 				<p className="paragraph-normal text-gray-600">
-					Latitude: {props.lat} Longitute: {props.lon}
+					Latitude: {lat} Longitute: {lon}
 				</p>
 			</div>
 		</Popup>
 	</Marker>
 }
 
-export type { DetectionProps }
-export default Detection
+export { Detection as default, type DetectionProps }
