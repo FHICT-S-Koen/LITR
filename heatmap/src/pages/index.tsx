@@ -1,4 +1,5 @@
 import Search, { OptionProps } from '../components/search/Search'
+import ResetButton from '../components/resetButton/ResetButton'
 import StoreProvider from './Store'
 import dynamic from "next/dynamic"
 
@@ -15,6 +16,7 @@ export async function getStaticProps() {
 const Home: React.FC<{options: OptionProps[]}> = ({options}) => {
   return <StoreProvider>
     <Search options={options} />
+    <ResetButton />
     <Map />
   </StoreProvider>
 }
