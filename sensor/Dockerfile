@@ -1,0 +1,54 @@
+FROM nvcr.io/nvidia/l4t-base:r32.6.1
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+# install prerequisites
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+            python3-pip \
+		  python3-dev \
+		  libopenblas-dev \
+		  libopenmpi-dev \
+            openmpi-bin \
+            openmpi-common \
+		  gfortran \
+		  libomp-dev \
+    && rm -rf /var/lib/apt/lists/* \
+    && apt-get clean
+
+RUN pip3 install --no-cache-dir setuptools Cython wheel
+RUN pip3 install --no-cache-dir --verbose numpy
+
+# PyTorch (for JetPack 4.6 DP)
+ARG PYTORCH_URL=https://nvidia.box.com/shared/static/p57jwntv436lfrd78inwl7iml6p13fzh.whl
+ARG PYTORCH_WHL=torch-1.10.0-cp36-cp36m-linux_aarch64.whl
+
+RUN wget --quiet --show-progress --progress=bar:force:noscroll --no-check-certificate ${PYTORCH_URL} -O ${PYTORCH_WHL} && \
+    pip3 install --no-cache-dir --verbose ${PYTORCH_WHL} && \
+    rm ${PYTORCH_WHL}
+
+# torchvision 0.11.1
+ARG TORCHVISION_VERSION=v0.11.1
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+		  git \
+		  build-essential \
+            libjpeg-dev \
+		  zlib1g-dev \
+    && rm -rf /var/lib/apt/lists/* \
+    && apt-get clean
+
+RUN git clone -b ${TORCHVISION_VERSION} https://github.com/pytorch/vision torchvision && \
+    cd torchvision && \
+    python3 setup.py install && \
+    cd ../ && \
+    rm -rf torchvision
+
+
+ENV SECRET_KEY="test"
+ENV API_URL="http://localhost:3000/api/detection"
+
+COPY src src
+
+ENTRYPOINT [ "python3.6", "src/main.py" ]
