@@ -1,6 +1,5 @@
 FROM nvcr.io/nvidia/l4t-base:r32.6.1
 
-RUN ls /usr/local/cuda-10.2/targets/aarch64-linux/lib/libcurand*
 ENV DEBIAN_FRONTEND=noninteractive
 
 # install prerequisites
@@ -8,6 +7,7 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
             python3-pip \
 		  python3-dev \
+          libcurand.so.10 \
 		  libopenblas-dev \
 		  libopenmpi-dev \
             openmpi-bin \
