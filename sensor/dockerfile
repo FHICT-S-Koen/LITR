@@ -40,7 +40,7 @@ RUN apt-get update && \
     && apt-get clean
 
 RUN pip3 install --upgrade pip
-RUN pip3 install --no-cache-dir Pillow tqdm scipy seaborn requests opencv-python pyserial python-dotenv
+RUN pip3 install --no-cache-dir Pillow tqdm scipy seaborn requests opencv-python pyserial python-dotenv PyYAML
 
 RUN git clone -b ${TORCHVISION_VERSION} https://github.com/pytorch/vision torchvision && \
     cd torchvision && \
