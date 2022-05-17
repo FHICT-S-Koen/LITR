@@ -2,7 +2,7 @@ name: deploy sensor
 
 on:
   workflow_dispatch: 
-    branches: [ production develop ]
+    branches: [ develop ]
     paths: [ sensor/** ]
 
 jobs: 
