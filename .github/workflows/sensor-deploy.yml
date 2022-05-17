@@ -30,7 +30,10 @@ jobs:
           echo ::set-output name=docker_image::${DOCKER_REGISTRY}/${DOCKER_IMAGE}
 
       - name: Install missing Nvidia Docker dependencies
-        run: sudo apt-get install nvidia-container-runtime
+        run: | 
+          deb https://nvidia.github.io/nvidia-container-runtime/stable/ubuntu18.04/$(ARCH) /
+          sudo apt update 
+          sudo apt-get install nvidia-container-runtime
 
       - name: Run Buildx (push image)
         if: success()
