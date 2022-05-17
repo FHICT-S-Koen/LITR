@@ -7,7 +7,9 @@ on:
 
 jobs: 
   build-and-deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
+    env:
+      DOCKER_TARGET_PLATFORM: linux/arm64
     defaults:
       run:
         working-directory: sensor
