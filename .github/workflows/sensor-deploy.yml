@@ -30,7 +30,10 @@ jobs:
           echo ::set-output name=docker_image::${DOCKER_REGISTRY}/${DOCKER_IMAGE}
 
       - name: Check installed packages
-        run: apt list nvidia* && ls /etc/docker && ls cat /etc/docker/daemon.json
+        run: | 
+          apt list nvidia* 
+          ls /etc/docker 
+          cat /etc/docker/daemon.json
 
       - name: Install missing Nvidia Docker dependencies
         run: | 
@@ -42,7 +45,10 @@ jobs:
           sudo apt-get update
       
       - name: Check installed packages
-        run: apt list nvidia* && ls /etc/docker && ls cat /etc/docker/daemon.json
+        run: | 
+          apt list nvidia* 
+          ls /etc/docker 
+          cat /etc/docker/daemon.json
 
       - name: Run Buildx (push image)
         if: success()
