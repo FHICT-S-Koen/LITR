@@ -2,8 +2,6 @@ FROM nvcr.io/nvidia/l4t-base:r32.6.1
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt list nvidia*
-
 # install prerequisites
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
