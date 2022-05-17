@@ -36,9 +36,5 @@ jobs:
         run: |        
           docker buildx build \        
           --platform ${{ steps.prepare.outputs.docker_platform }} \        
-          --tag ${{ steps.prepare.outputs.docker_image }}:${{ steps.prepare.outputs.version }} \        
-          --file ./dockerfile \
-          -t ekhorn/litr:latest
-      
-      - name: Push Docker image
-        run: docker push ekhorn/litr:latest
+          --tag ${{ steps.prepare.outputs.docker_image }} \        
+          --file ./dockerfile  \ 
