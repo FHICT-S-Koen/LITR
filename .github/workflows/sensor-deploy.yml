@@ -9,20 +9,42 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-18.04
     env:
+      DOCKER_REGISTRY: hub.docker.com
+      DOCKER_IMAGE: ekhorn/litr:latest
       DOCKER_TARGET_PLATFORM: linux/arm64
     defaults:
       run:
         working-directory: sensor
     steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
+      - name: Checkout the code       
+        uses: actions/checkout@v1              
+      - name: Set up Docker Buildx      
+        uses: crazy-max/ghaction-docker-buildx@v1      
+        with:        
+          version: latest    
 
-      - name: Build Docker image
-        run: docker build -t ekhorn/litr:latest -f dockerfile .
+      - name: Prepare      
+        if: success()      
+        id: prepare      
+        run: |        
+          echo ::set-output name=docker_platform::${DOCKER_TARGET_PLATFORM}        
+          echo ::set-output name=docker_image::${DOCKER_REGISTRY}/${DOCKER_IMAGE}        
+          echo ::set-output name=version::${GITHUB_RUN_NUMBER} 
+      
+      - name: Run Buildx (push image)      
+      if: success()      
+      run: |        
+        docker buildx build \        
+        --platform ${{ steps.prepare.outputs.docker_platform }} \        
+        --tag ${{ steps.prepare.outputs.docker_image }}:${{ steps.prepare.outputs.version }} \        
+        --file ./Dockerfile \        
+        --output type=image,push=true .
 
-      - name: Docker image info
-        run: docker images
+      # - name: Build Docker image
+      #   run: docker build -t ekhorn/litr:latest -f dockerfile .
 
-      - name: Push Docker image
-        run: docker push ekhorn/litr:latest
+      # - name: Docker image info
+      #   run: docker images
+
+      # - name: Push Docker image
+      #   run: docker push ekhorn/litr:latest
