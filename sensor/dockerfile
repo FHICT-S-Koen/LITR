@@ -3,7 +3,7 @@ FROM nvcr.io/nvidia/l4t-base:r32.6.1
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN nvcc -V
-RUN ls ~/.local/lib/
+RUN ls ~/
 
 # install prerequisites
 RUN apt-get update && \
