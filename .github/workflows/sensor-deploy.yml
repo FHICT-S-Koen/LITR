@@ -2,8 +2,6 @@ name: deploy sensor
 
 on:
   workflow_dispatch: 
-    branches: [ develop ]
-    paths: [ sensor/** ]
 
 jobs: 
   build-and-deploy:
@@ -34,10 +32,10 @@ jobs:
           echo ::set-output name=version::${GITHUB_RUN_NUMBER} 
       
       - name: Run Buildx (push image)      
-      if: success()      
-      run: |        
-        docker buildx build \        
-        --platform ${{ steps.prepare.outputs.docker_platform }} \        
-        --tag ${{ steps.prepare.outputs.docker_image }}:${{ steps.prepare.outputs.version }} \        
-        --file ./Dockerfile \        
-        --output type=image,push=true .
+        if: success()
+        run: |        
+          docker buildx build \        
+          --platform ${{ steps.prepare.outputs.docker_platform }} \        
+          --tag ${{ steps.prepare.outputs.docker_image }}:${{ steps.prepare.outputs.version }} \        
+          --file ./Dockerfile \        
+          --output type=image,push=true .
