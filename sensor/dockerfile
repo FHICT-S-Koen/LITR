@@ -3,6 +3,7 @@ FROM nvcr.io/nvidia/l4t-base:r32.6.1
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN nvcc -V
+RUN ls ~/.local/lib/python3.6/site-packages/torch/lib
 
 # install prerequisites
 RUN apt-get update && \
@@ -28,6 +29,8 @@ ARG PYTORCH_WHL=torch-1.10.0-cp36-cp36m-linux_aarch64.whl
 RUN wget --quiet --show-progress --progress=bar:force:noscroll --no-check-certificate ${PYTORCH_URL} -O ${PYTORCH_WHL} && \
     pip3 install --no-cache-dir --verbose ${PYTORCH_WHL} && \
     rm ${PYTORCH_WHL}
+
+RUN ls ~/.local/lib/python3.6/site-packages/torch/lib
 
 # torchvision 0.11.1
 ARG TORCHVISION_VERSION=v0.11.1
