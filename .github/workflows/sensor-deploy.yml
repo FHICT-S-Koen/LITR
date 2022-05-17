@@ -29,10 +29,10 @@ jobs:
           echo ::set-output name=docker_platform::${DOCKER_TARGET_PLATFORM}
           echo ::set-output name=docker_image::${DOCKER_REGISTRY}/${DOCKER_IMAGE}
 
-      - name: Check installed packages
-        run: apt list nvidia*
+      - name: Install missing nvidia docker dependencies
+        run: apt install nvidia-docker2 nvidia-container-toolkit
 
-      - name: Run Buildx (push image)      
+      - name: Run Buildx (push image)
         if: success()
         run: >
           docker buildx build
