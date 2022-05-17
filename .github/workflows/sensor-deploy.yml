@@ -20,7 +20,7 @@ jobs:
       - name: Set up Docker Buildx      
         uses: crazy-max/ghaction-docker-buildx@v1      
         with:        
-          version: latest    
+          buildx-version: latest    
 
       - name: Prepare      
         if: success()      
@@ -32,4 +32,8 @@ jobs:
       - name: Run Buildx (push image)      
         if: success()
         run: |        
-          docker buildx build --platform ${{ steps.prepare.outputs.docker_platform }} --tag ${{ steps.prepare.outputs.docker_image }} --file ./dockerfile --output type=image,push=true .
+          docker buildx build \
+            --platform ${{ steps.prepare.outputs.docker_platform }} \ 
+            --tag ${{ steps.prepare.outputs.docker_image }} \ 
+            --file ./dockerfile \
+            --output type=image,push=true .
