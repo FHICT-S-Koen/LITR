@@ -3,7 +3,7 @@ FROM nvcr.io/nvidia/l4t-base:r32.6.1
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN nvcc -V
-RUN ls ~/.local/lib/python3.6/site-packages/torch/lib
+RUN ls ~/.local/lib/
 
 # install prerequisites
 RUN apt-get update && \
