@@ -29,7 +29,7 @@ jobs:
           echo ::set-output name=docker_platform::${DOCKER_TARGET_PLATFORM}
           echo ::set-output name=docker_image::${DOCKER_REGISTRY}/${DOCKER_IMAGE}
 
-        name: Check installed packages
+      - name: Check installed packages
         run: apt list nvidia*
 
       - name: Run Buildx (push image)      
