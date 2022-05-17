@@ -1,5 +1,6 @@
 FROM nvcr.io/nvidia/l4t-base:r32.6.1
 
+RUN ls /usr/local/cuda-10.2/targets/aarch64-linux/lib/libcurand*
 ENV DEBIAN_FRONTEND=noninteractive
 
 # install prerequisites
