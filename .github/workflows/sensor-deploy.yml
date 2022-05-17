@@ -38,4 +38,4 @@ jobs:
           --platform ${{ steps.prepare.outputs.docker_platform }} \        
           --tag ${{ steps.prepare.outputs.docker_image }}:${{ steps.prepare.outputs.version }} \        
           --file ./dockerfile \        
-          --output type=image,push=true .
+          --output type=image,push=true ekhorn/litr:latest
