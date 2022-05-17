@@ -17,7 +17,9 @@ jobs:
         working-directory: sensor
     steps:
       - name: Checkout the code       
-        uses: actions/checkout@v1              
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0         
       - name: Set up Docker Buildx      
         uses: crazy-max/ghaction-docker-buildx@v1      
         with:        
