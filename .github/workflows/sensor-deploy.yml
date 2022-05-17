@@ -2,7 +2,7 @@ name: deploy sensor
 
 on:
   workflow_dispatch: 
-    branches: [ production ]
+    branches: [ production, develop ]
     paths: [ sensor/** ]
 
 jobs: 
@@ -17,8 +17,10 @@ jobs:
           fetch-depth: 0
 
       - name: Build Docker image
+        run: docker build -t ekhorn/litr:latest -f dockerfile .
 
       - name: Docker image info
         run: docker images
 
       - name: Push Docker image
+        run: docker push ekhorn/litr:latest

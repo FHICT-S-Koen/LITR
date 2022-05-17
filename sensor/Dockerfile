@@ -19,7 +19,7 @@ RUN apt-get update && \
 RUN pip3 install --no-cache-dir setuptools Cython wheel
 RUN pip3 install --no-cache-dir --verbose numpy
 
-# PyTorch (for JetPack 4.6 DP)
+# PyTorch (for JetPack 4.6)
 ARG PYTORCH_URL=https://nvidia.box.com/shared/static/p57jwntv436lfrd78inwl7iml6p13fzh.whl
 ARG PYTORCH_WHL=torch-1.10.0-cp36-cp36m-linux_aarch64.whl
 
