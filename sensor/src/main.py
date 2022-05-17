@@ -8,19 +8,20 @@ from matplotlib import pyplot as plt
 import sensor
 from detection import Detection 
 import _utils
+import onnx
 
 # setting device on GPU if available, else CPU
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print('Using device:', device, '\n')
 
 # Load Model (yolov5s)
-model = torch.hub.load('ultralytics/yolov5', 'yolov5s')
-
+# model = torch.hub.load('ultralytics/yolov5', 'yolov5s')
+model = onnx.load('yolov5.onnx')
 # Set confidence treshold
-model.conf = 0.30
+# model.conf = 0.30
 
 # Only detect bottles
-model.classes = [39]
+# model.classes = [39]
 
 # Get environment variables
 API_URL, SECRET_KEY = _utils.get_env(['API_URL', 'SECRET_KEY'])
