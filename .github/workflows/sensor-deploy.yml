@@ -44,7 +44,7 @@ jobs:
           sudo tee /etc/apt/sources.list.d/nvidia-container-runtime.list
           sudo apt-get update
           sudo usermod -a -G docker $USER
-          sudo echo "{"runtimes":{"nvidia":{"path":"/usr/bin/nvidia-container-runtime","runtimeArgs":[]}},"default-runtime":"nvidia"}" > '/etc/docker/daemon.json'
+          echo "{"runtimes":{"nvidia":{"path":"/usr/bin/nvidia-container-runtime","runtimeArgs":[]}},"default-runtime":"nvidia"}" > '/etc/docker/daemon.json'
       
       - name: Check installed packages
         run: | 
