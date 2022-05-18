@@ -29,14 +29,9 @@ jobs:
           echo ::set-output name=docker_platform::${DOCKER_TARGET_PLATFORM}
           echo ::set-output name=docker_image::${DOCKER_REGISTRY}/${DOCKER_IMAGE}
 
-      - name: Check installed packages
+      - name: Add nvidia-container-runtime
         run: | 
-          apt list nvidia* 
-          ls /etc/docker 
-          cat /etc/docker/daemon.json
-
-      - name: Install missing Nvidia Docker dependencies
-        run: | 
+          nvcc -V
           curl -s -L https://nvidia.github.io/nvidia-container-runtime/gpgkey | \
           sudo apt-key add -
           distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
@@ -45,12 +40,6 @@ jobs:
           sudo apt-get update
           echo '{"runtimes":{"nvidia":{"path":"/usr/bin/nvidia-container-runtime","runtimeArgs":[]}},"default-runtime":"nvidia"}' | sudo tee /etc/docker/daemon.json
           sudo systemctl restart docker
-      
-      - name: Check installed packages
-        run: | 
-          apt list nvidia* 
-          ls /etc/docker 
-          cat /etc/docker/daemon.json
 
       - name: Run Buildx (push image)
         if: success()
