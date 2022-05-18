@@ -1,6 +1,6 @@
 FROM nvcr.io/nvidia/l4t-base:r32.6.1
 
-RUN sudo find / -name 'libcurand.so*'
+RUN find / -name 'libcurand.so*'
 
 ENV DEBIAN_FRONTEND=noninteractive
 
