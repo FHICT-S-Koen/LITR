@@ -49,7 +49,14 @@ const Detection: FC<DetectionProps> = (props) => {
 
 		const image = new Image()
 		image.src = 'data:image/png;base64,' + store.state.picture
-		context.drawImage(image, 0, 0)
+
+		const width = image.width
+		const height = image.height
+
+		canvas.width = width
+		canvas.height = height
+		  
+		context.drawImage(image, 0, 0, width, height)
 
 		if (!showBoxesRef.current) return
 		context.beginPath()
@@ -59,9 +66,17 @@ const Detection: FC<DetectionProps> = (props) => {
 			context.font = "24px arial-mono"
 			context.lineWidth = 5
 			const labelText = o.type + " " + Math.round(o.confidence * 100) + "%"
-			context.fillRect(o.xMin, o.yMin - 28, context.measureText(labelText).width, 30)
-			context.fillStyle = "white"
-			context.fillText(labelText, o.xMin, o.yMin - 8)
+			if (o.yMin > 28 ){
+				context.fillRect(o.xMin, o.yMin - 28, context.measureText(labelText).width, 30)
+				context.fillStyle = "white"
+				context.fillText(labelText, o.xMin, o.yMin - 8)
+			}
+			else {
+				context.fillRect(o.xMin, o.yMax , context.measureText(labelText).width, 30)
+				context.fillStyle = "white"
+				context.fillText(labelText, o.xMin, o.yMax + 22)
+			}
+
 			context.rect(o.xMin, o.yMin, o.xMax - o.xMin, o.yMax - o.yMin)
 		})
 		context.stroke()
