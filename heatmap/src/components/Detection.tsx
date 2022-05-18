@@ -63,7 +63,7 @@ const Detection: FC<DetectionProps> = (props) => {
 		props.objects.map(o => {
 			context.strokeStyle = "red"
 			context.fillStyle = "red"
-			context.font = "24px arial-mono"
+			context.font = "26px Helvetica"
 			context.lineWidth = 5
 			const labelText = o.type + " " + Math.round(o.confidence * 100) + "%"
 			if (o.yMin > 28 ){
@@ -88,10 +88,10 @@ const Detection: FC<DetectionProps> = (props) => {
 			<button onClick={() => {setShowBoxes(!showBoxes), onClick()}}>show</button>
 			<div className="p-3">
 				<span className="text-sm text-primary">Detected at: {detectedAt}</span>
-				<h3 className="font-semibold text-xl leading-6 text-gray-700 my-2">
+				<p className="text-sm text-gray-700 my-2">
 					Types of litter: {objects.map(e => e.type)} <br></br>
 					Number of detected objects: {objects.length}
-				</h3>
+				</p>
 				<p className="paragraph-normal text-gray-600">
 					Latitude: {lat} Longitute: {lon}
 				</p>
