@@ -2,9 +2,6 @@ FROM nvcr.io/nvidia/l4t-base:r32.6.1
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN nvcc -V
-RUN ls ~/
-
 # install prerequisites
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
@@ -30,8 +27,6 @@ RUN wget --quiet --show-progress --progress=bar:force:noscroll --no-check-certif
     pip3 install --no-cache-dir --verbose ${PYTORCH_WHL} && \
     rm ${PYTORCH_WHL}
 
-RUN ls ~/.local/lib/python3.6/site-packages/torch/lib
-
 # torchvision 0.11.1
 ARG TORCHVISION_VERSION=v0.11.1
 
@@ -41,6 +36,10 @@ RUN apt-get update && \
 		  build-essential \
             libjpeg-dev \
 		  zlib1g-dev \
+          libpython3-dev \
+          libavcodec-dev \
+          libavformat-dev \
+          libswscale-dev \          
     && rm -rf /var/lib/apt/lists/* \
     && apt-get clean
 
