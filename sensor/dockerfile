@@ -44,7 +44,7 @@ RUN pip3 install Pillow tqdm scipy seaborn requests opencv-python pyserial pytho
 
 RUN git clone -b ${TORCHVISION_VERSION} https://github.com/pytorch/vision torchvision && \
     cd torchvision && \
-    pip3 install -e torchvision && \
+    python3 setup.py install && \
     cd ../ && \
     rm -rf torchvision
 
