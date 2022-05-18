@@ -1,3 +1,4 @@
+from copy import copy
 import time
 import torch
 import requests
@@ -40,6 +41,7 @@ while True:
 			if cv2.waitKey(10) & 0xFF == ord('h'):
 				break
 			ret, frame = cap.read()
+			base_img = copy(frame)
 
 			# Check frame for objects
 			results = model(frame)
@@ -55,7 +57,7 @@ while True:
 			if (df.empty): continue
 
 			lat, lon = sensor.get_location(ser)
-			data = Detection(df, lat, lon, frame)
+			data = Detection(df, lat, lon, base_img)
 			res = requests.post(
 				url=API_URL, 
 				data=data.json_serialize(), # To get the image with bounding box use: results.render()[0]
