@@ -42,7 +42,7 @@ void displayInfo()
   {
     digitalWrite(LED_BUILTIN, HIGH);
     Serial.print(gps.location.lat(), 6);
-    Serial.print(F(","));
+    Serial.print(F(" "));
     Serial.print(gps.location.lng(), 6);
   }
   else
