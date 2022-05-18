@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { DetectionProps } from '../../components/Detection'
-import { prisma } from '../../db'
+import { DetectionProps } from '../../../components/Detection'
+import { prisma } from '../../../db'
 import { PrismaClientValidationError } from '@prisma/client/runtime'
 
 interface Error {
@@ -36,8 +36,13 @@ async function handleGet(
   res: NextApiResponse<string | Error>
 ) {
   const detections = await prisma.detection.findMany({
-    include: {
-      objects: true
+    select: {
+      id: true,
+      objects: true,
+      detectedAt: true,
+      lat: true,
+      lon: true,
+      picture: false
     }
   })
   return res.status(200).json(JSON.stringify(detections))

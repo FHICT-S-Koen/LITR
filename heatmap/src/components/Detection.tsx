@@ -1,6 +1,7 @@
-import React, { FC } from "react"
+import React, { FC, useContext } from "react"
 import { useRef, useState } from "react"
 import { Marker, Popup } from "react-leaflet"
+import { Context } from "../pages/Store"
 
 interface DetectionProps {
 	id: number
@@ -22,7 +23,7 @@ interface DetectionProps {
 }
 
 const Detection: FC<DetectionProps> = (props) => {
-	const {objects, detectedAt,	lat, lon, picture} = props
+	const {id, objects, detectedAt,	lat, lon, picture} = props
 
 	const canvasRef = React.createRef<HTMLCanvasElement>();
 	
@@ -32,15 +33,22 @@ const Detection: FC<DetectionProps> = (props) => {
 		showBoxesRef.current = val
 		_setShowBoxes(val)
 	}
+	const store = useContext(Context)
 
 	const onClick = () => {
+		fetch(`/api/detection/${id}`)
+		  	.then(res => res.json())
+			.then((data) => 
+				store.dispatch({type: "setPicture", payload: data.picture}),
+			)
+		if (!store.state.picture) return
 		if (!canvasRef.current) return
 		const canvas = canvasRef.current
 		const context = canvas.getContext('2d')
 		if (!context) return
 
 		const image = new Image()
-		image.src = 'data:image/png;base64,' + picture
+		image.src = 'data:image/png;base64,' + store.state.picture
 		context.drawImage(image, 0, 0)
 
 		if (!showBoxesRef.current) return

@@ -4,12 +4,14 @@ import { DetectionProps } from '../components/Detection'
 
 const initialState = {
   map: null as Map | null,
-  detections: null as DetectionProps[] | null
+  detections: null as DetectionProps[] | null,
+  picture: null as string | null
 }
 
 type Action =
   | { type: 'setMap', payload: Map }
   | { type: 'setDetections', payload: DetectionProps[] }
+  | { type: 'setPicture', payload: string }
 
 const reducer = (state = initialState, action: Action): InitialState => {
   switch (action.type) {
@@ -17,6 +19,8 @@ const reducer = (state = initialState, action: Action): InitialState => {
       return { ...state, map: action.payload }
     case 'setDetections': 
       return { ...state, detections: action.payload }
+    case 'setPicture': 
+      return { ...state, picture: action.payload }
     default:
       return state
   }
