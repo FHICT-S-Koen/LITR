@@ -1,6 +1,6 @@
 FROM nvcr.io/nvidia/l4t-base:r32.6.1
 
-RUN find / -name 'libcurand.so*'
+RUN find / -name 'cuda-10.2/targets/aarch64-linux/lib/*'
 
 ENV DEBIAN_FRONTEND=noninteractive
 
