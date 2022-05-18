@@ -7,7 +7,7 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
             python3-pip \
 		  python3-dev \
-		  libopenblas-base \
+		  libopenblas-dev \
 		  libopenmpi-dev \
             openmpi-bin \
             openmpi-common \
@@ -36,15 +36,11 @@ RUN apt-get update && \
 		  build-essential \
             libjpeg-dev \
 		  zlib1g-dev \
-          libpython3-dev \
-          libavcodec-dev \
-          libavformat-dev \
-          libswscale-dev \          
     && rm -rf /var/lib/apt/lists/* \
     && apt-get clean
 
 RUN pip3 install --upgrade pip
-RUN pip3 install --no-cache-dir Pillow tqdm scipy seaborn requests opencv-python pyserial python-dotenv PyYAML
+RUN pip3 install Pillow tqdm scipy seaborn requests opencv-python pyserial python-dotenv PyYAML
 
 RUN git clone -b ${TORCHVISION_VERSION} https://github.com/pytorch/vision torchvision && \
     cd torchvision && \
