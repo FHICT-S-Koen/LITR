@@ -56,7 +56,7 @@ while cap.isOpened():
 	
 	count += 1
 	print(f'{count} data send')
-	# print(res.text)
+	print(res.text)
 
 
 cap.release()
