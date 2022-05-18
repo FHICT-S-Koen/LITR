@@ -19,11 +19,7 @@ void setup()
   Serial.begin(9600);
   ss.begin(GPSBaud);
 
-  Serial.println(F("DeviceExample.ino"));
-  Serial.println(F("A simple demonstration of TinyGPS++ with an attached GPS module"));
-  Serial.print(F("Testing TinyGPS++ library v. ")); Serial.println(TinyGPSPlus::libraryVersion());
-  Serial.println(F("by Mikal Hart"));
-  Serial.println();
+  pinMode(LED_BUILTIN, OUTPUT);
 }
 
 void loop()
@@ -42,9 +38,9 @@ void loop()
 
 void displayInfo()
 {
-  Serial.print(F("Location: ")); 
   if (gps.location.isValid())
   {
+    digitalWrite(LED_BUILTIN, HIGH);
     Serial.print(gps.location.lat(), 6);
     Serial.print(F(","));
     Serial.print(gps.location.lng(), 6);
@@ -52,6 +48,10 @@ void displayInfo()
   else
   {
     Serial.print(F("INVALID"));
+    digitalWrite(LED_BUILTIN, HIGH);
+    delay(500);
+    digitalWrite(LED_BUILTIN, LOW);
+    delay(500);
   }
 
   Serial.println();
