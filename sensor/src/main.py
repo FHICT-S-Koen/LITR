@@ -32,7 +32,7 @@ while True:
 		# Try to start videocapture
 		cap = cv2.VideoCapture(0)
 		print("Camera connected")
-		serial.Serial('/dev/ttyUSB0', 9600, timeout=1)
+		res = serial.Serial('/dev/ttyUSB0', 9600, timeout=1)
 		print("GPS connected")
 		count = 0
 
@@ -55,7 +55,7 @@ while True:
 			# else send detection data
 			if (df.empty): continue
 
-			lat, lon = sensor.get_location()
+			lat, lon = sensor.get_location(res)
 			res = requests.post(
 				url=API_URL, 
 				data=Detection(df, lat, lon, frame).json_serialize(), # To get the image with bounding box use: results.render()[0]
