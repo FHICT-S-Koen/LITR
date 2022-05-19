@@ -1,6 +1,6 @@
 import { createContext, FC, Dispatch, useReducer, ReactNode } from 'react'
 import { Map } from 'leaflet'
-import { DetectionProps } from '../components/Detection'
+import { DetectionProps } from '../components/detection/Detection'
 
 const initialState = {
   map: null as Map | null,
