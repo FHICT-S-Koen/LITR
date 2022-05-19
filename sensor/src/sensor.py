@@ -1,11 +1,6 @@
-import serial
-
-# make sure the 'COM#' is set according the Windows Device Manager
-def get_location(): 
+def get_location(ser): 
     try: 
-        ser = serial.Serial('COM3', 9600, timeout=1)
-        val = ser.readline().split(' ')
-        ser.close()
-        return int(val[0]), int(val[1])
+        val = ser.readline().decode().replace('\r\n', '').split(' ')
+        return float(val[0]), float(val[1])
     except:
         return 0, 0

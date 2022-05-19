@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.leaflet-popup-content {
+	margin: 0% !important;
+	width: 400px !important;
+	border-radius: 5px !important; 
+}
+
+.leaflet-popup-close-button {
+	border-radius: 5px !important;
+}
