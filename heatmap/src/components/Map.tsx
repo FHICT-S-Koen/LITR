@@ -6,7 +6,7 @@ import "leaflet-defaulticon-compatibility";
 import MapProvider from './search/MapProvider';
 import { useContext, useEffect } from 'react';
 import { Context } from '../pages/Store';
-import Detection from './Detection';
+import Detection from './detection/Detection';
 
 const Map = () => {
 	const store = useContext(Context)
