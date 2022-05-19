@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { DetectionProps } from '../../../components/Detection'
+import { DetectionProps } from '../../../components/detection/Detection'
 import { prisma } from '../../../db'
 import { PrismaClientValidationError } from '@prisma/client/runtime'
 
