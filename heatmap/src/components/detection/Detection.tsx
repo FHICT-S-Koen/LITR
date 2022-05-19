@@ -53,7 +53,8 @@ const Detection: FC<DetectionProps> = (props) => {
 		}
 		if (showBoxes)
 			drawBoundingBox(canvasRef.current, props)
-	}, [canvasRef, isLoading, props, showBoxes, store.state.picture])
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [canvasRef, isLoading, showBoxes])
 
 	const onClick = () => {
 		setLoading(true)
@@ -69,12 +70,12 @@ const Detection: FC<DetectionProps> = (props) => {
 
 	return <Marker position={[lat, lon]} eventHandlers={{click: onClick}}>
 		<Popup>
-			{!isLoading && <canvas className="w-full h-full" ref={canvasRef} width={width} height={height}></canvas>}
-			<button className="w-full bg-slate-300 my-0.5 border border-black" onClick={toggleBoundingBoxes}>show bounding box</button>
-			<div className="font-bold text-lg">
+			{!isLoading && <canvas className="w-full h-full rounded-t-[5px] outline outline-1" ref={canvasRef} width={width} height={height}></canvas>}
+			<button className="w-full font-bold py-2 mt-0.5 shadow hover:shadow-md" onClick={toggleBoundingBoxes}>show bounding box</button>
+			<div className="p-2 font-bold text-lg">
 				Details
 			</div>
-			<div className="">Detected at: {detectedAt}</div>
+			<div className="p-2 rounded-b-[5px] text-base">Detected at: {detectedAt}
 				<div className="leading-6 text-gray-700 my-2">
 					Types of litter: {objects.map(e => e.type)} <br></br>
 					Number of detected objects: {objects.length}
@@ -82,6 +83,7 @@ const Detection: FC<DetectionProps> = (props) => {
 				<div className="paragraph-normal text-gray-600">
 					Latitude: {lat} Longitute: {lon}
 				</div>
+			</div>
 		</Popup>
 	</Marker>
 }
