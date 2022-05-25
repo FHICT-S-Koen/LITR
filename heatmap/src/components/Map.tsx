@@ -9,7 +9,7 @@ import { FC } from 'react';
 import ResetButton from './ResetButton';
 
 const Map: FC<{detections: DetectionProps[]}> = ({detections}) => {
-	return <MapContainer center={[52.1009, 5.6463]} attributionControl zoom={9} scrollWheelZoom={true} className="h-screen">
+	return <MapContainer center={[52.1009, 5.6463]} zoom={9} scrollWheelZoom={true} className="h-screen">
 		<TileLayer
 			attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 			url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
