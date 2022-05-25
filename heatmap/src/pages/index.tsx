@@ -1,24 +1,24 @@
-import Search, { OptionProps } from '../components/search/Search'
-import ResetButton from '../components/resetButton/ResetButton'
-import StoreProvider from './Store'
+import { prisma } from "../db"
 import dynamic from "next/dynamic"
-
+import { DetectionProps } from "../components/detection/Detection"
 const Map = dynamic(() => import("../components/Map"), { ssr:false })
-import options from '../components/search/data/options.json'
 
-
-export async function getStaticProps() {
-  return {
-    props: { options }
-  }
+export async function getServerSideProps() {
+  const detections = await prisma.detection.findMany({
+    select: {
+      id: true,
+      objects: true,
+      detectedAt: true,
+      lat: true,
+      lon: true,
+      picture: false
+    }
+  })
+  return { props: { detections } }// will be passed to the page component as props
 }
 
-const Home: React.FC<{options: OptionProps[]}> = ({options}) => {
-  return <StoreProvider>
-    <Search options={options} />
-    <ResetButton />
-    <Map />
-  </StoreProvider>
+const Home: React.FC<{detections: DetectionProps[]}> = ({detections}) => {
+  return <Map detections={detections} />
 }
 
 export default Home

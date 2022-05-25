@@ -1,7 +1,6 @@
-import React, { FC, useContext, useEffect } from "react"
-import { useRef, useState } from "react"
+import React, { createRef, FC, useEffect } from "react"
+import { useState } from "react"
 import { Marker, Popup } from "react-leaflet"
-import { Context } from "../../pages/Store"
 import { drawBoundingBox } from "./draw"
 
 interface DetectionProps {
@@ -25,52 +24,38 @@ interface DetectionProps {
 
 const Detection: FC<DetectionProps> = (props) => {
 	const {id, objects, detectedAt,	lat, lon} = props
-	const store = useContext(Context)
 
-	const canvasRef = React.createRef<HTMLCanvasElement>();
-	
-	const [isLoading, setLoading] = useState(false)
+	const canvasRef = createRef<HTMLCanvasElement>()
+	const [picture, setPicture] = useState<string>()
 	const [showBoxes, setShowBoxes] = useState(false)
-	const [{ width, height }, setSize] = useState({ width: 0, height: 0 })
 
 	useEffect(() => {
-		if (!canvasRef.current || !store.state.picture) return
-		if (!isLoading) {
-			const context = canvasRef.current.getContext('2d')
-			if (!context) return
-			
-			const image = new Image()
-			image.src = 'data:image/png;base64,' + store.state.picture
-			
-			const width = image.width
-			const height = image.height
-			
-			canvasRef.current.width = width
-			canvasRef.current.height = height
-			
-			setSize({width, height})
-			context.drawImage(image, 0, 0, width, height)
+		if (!canvasRef.current) return
+		const canvas = canvasRef.current
+		const context = canvas.getContext('2d')
+		if (!context || !picture) return
+		const image = new Image()
+		image.onload = () => {
+			canvas.width = image.width;
+			canvas.height = image.height;
+			context.drawImage(image, 0, 0);
+			if (showBoxes)
+				drawBoundingBox(canvas, props)
 		}
-		if (showBoxes)
-			drawBoundingBox(canvasRef.current, props)
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [canvasRef, isLoading, showBoxes])
-
-	const onClick = () => {
-		setLoading(true)
-		fetch(`/api/detection/${id}`)
-		  	.then(res => res.json())
-			.then((data) => {
-				store.dispatch({type: "setPicture", payload: data.picture}),
-				setLoading(false)
-			})
-	}
+		image.src = picture
+	}, [picture, showBoxes])
 
 	const toggleBoundingBoxes = () => setShowBoxes(!showBoxes)
 
-	return <Marker position={[lat, lon]} eventHandlers={{click: onClick}}>
+	const handlePopupopen = async () => {
+		const res = await fetch(`/api/detection/${id}`)
+		const data = await res.json()
+		setPicture('data:image/png;base64,' + data.picture)
+	}
+
+	return <Marker position={[lat, lon]} eventHandlers={{popupopen: handlePopupopen}}>
 		<Popup>
-			{!isLoading && <canvas className="w-full h-full rounded-t-[5px] outline outline-1" ref={canvasRef} width={width} height={height}></canvas>}
+			<canvas className="w-full h-full rounded-t-[5px] outline outline-1" ref={canvasRef} />
 			<button className="w-full font-bold py-2 mt-0.5 shadow hover:shadow-md" onClick={toggleBoundingBoxes}>show bounding box</button>
 			<div className="p-2 font-bold text-lg">
 				Details

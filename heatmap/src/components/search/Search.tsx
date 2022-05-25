@@ -1,32 +1,47 @@
-import React, { ChangeEvent, FC, useContext } from 'react'
-import { LatLngTuple } from 'leaflet'
+import { useEffect } from 'react'
+import L, { Control, LatLngTuple } from 'leaflet'
+import options from './data/options.json'
+import { useMap } from 'react-leaflet';
 
-interface OptionProps {
-  name: string; 
-  coords: LatLngTuple
-}
+const searchHtml = () =>
+  [
+    "<input id='search' type='text' list='municipalities' placeholder='Enter Location' class='fixed -translate-x-1/2 left-1/2 mt-2 px-3 py-1.5 text-gray-700 border border-gray-300 rounded focus:border-blue-600 outline-none' />",
+    `<datalist id="municipalities">
+      ${options.map(m => `<option value='${m.name}'>${m.name}</option>`)}
+    </datalist>`
+  ].join("\n");
 
-import { Context } from '../../pages/Store';
+const Search = () => {
+  const map = useMap()
 
-const Search: FC<{options: OptionProps[]}> = ({options}) => {
-  const store = useContext(Context)
+  useEffect(() => {
+    const control = new Control()
 
-  function handleChange(e: ChangeEvent<HTMLInputElement>) {
+    control.onAdd = () => {
+      const div = L.DomUtil.create("div");
+      div.innerHTML = searchHtml()
+      return div;
+    };
+
+    map.addControl(control)
+
+    control.getContainer()?.addEventListener("mousedown", L.DomEvent.stopPropagation)
+    document.getElementById("search")?.addEventListener("keyup", handleChange)
+
+    return () => {
+      control.getContainer()?.removeEventListener("mousedown", L.DomEvent.stopPropagation)
+      document.getElementById("search")?.removeEventListener("keyup", handleChange)
+      map.removeControl(control)
+    }
+  }, [map])
+
+  function handleChange(e: any) {
     const object= options.find(o => o.name.toLowerCase() == e.target.value.toLowerCase())
     if (object != null)
-      store.state.map?.setView(object.coords, 14)
+      map.setView(object.coords as LatLngTuple, 14)
   }
 
-  return <>
-    <input 
-      onChange={handleChange}
-      placeholder='Enter Location'
-      className='absolute z-[999] left-1/2 -translate-x-1/2 mt-2 px-3 py-1.5 text-gray-700 border border-gray-300 rounded focus:border-blue-600 outline-none'
-      list="municipalities" />
-      <datalist id="municipalities">
-        {options.map((m, i) => <option key={i} value={m.name}>{m.name}</option>)}
-      </datalist>
-  </>
+  return null
 }
 
-export { Search as default, type OptionProps }
+export default Search
