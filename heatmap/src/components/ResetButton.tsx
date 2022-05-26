@@ -27,6 +27,7 @@ const ResetButton = () => {
 			document.getElementById("button")?.removeEventListener("click", handleClick)
 			map.removeControl(control)
 		}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [map])
 
 	const currentLocation: LatLngTuple = [51.433333, 5.483333] // Get Location of user
