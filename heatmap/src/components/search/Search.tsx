@@ -33,6 +33,7 @@ const Search = () => {
       document.getElementById("search")?.removeEventListener("keyup", handleChange)
       map.removeControl(control)
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [map])
 
   function handleChange(e: any) {
