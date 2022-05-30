@@ -8,6 +8,11 @@ import Search from './search/Search';
 import { FC } from 'react';
 import ResetButton from './ResetButton';
 
+import MarkerClusterGroup from './MarkerClusterGroup'
+import "leaflet.markercluster/dist/leaflet.markercluster.js"
+import "leaflet.markercluster/dist/MarkerCluster.css"
+import "leaflet.markercluster/dist/MarkerCluster.Default.css"
+
 const Map: FC<{detections: DetectionProps[]}> = ({detections}) => {
 	return <MapContainer center={[52.1009, 5.6463]} zoom={9} scrollWheelZoom={true} className="h-screen">
 		<TileLayer
@@ -16,7 +21,9 @@ const Map: FC<{detections: DetectionProps[]}> = ({detections}) => {
 		/>
 		<Search />
 		<ResetButton />
-		{detections?.map(d => <Detection key={d.id} {...d} />)}
+		<MarkerClusterGroup>
+			{detections?.map(d => <Detection key={d.id} {...d} />)}
+		</MarkerClusterGroup>
 	</MapContainer>
 }
 
