@@ -2,10 +2,9 @@ import json
 import requests
 import random
 import base64
+import datetime
 from io import BytesIO
 from PIL import Image
-
-
 # img = os.path.join(os.path.dirname(__file__), 'bottle.jpg')
 img = Image.open('bottle.jpg')
 im_file = BytesIO()
@@ -27,8 +26,14 @@ def generate_random_markers_in_municipalities():
             req = requests.post(
                 url ="http://localhost:3000/api/detection", 
                 data = json.dumps({
-                    'objects': [],
-                    'detectedAt': '',
+                    'objects': [{
+                        'xMin': 222.1836242675781,
+                        'yMin': 136.0699005126953,
+                        'xMax': 384.6746520996094,
+                        'yMax': 478.2084350585938,
+                        'confidence': 0.7357182502746582,
+                        'type': 'bottle'}],
+                    'detectedAt': datetime.datetime.now().strftime("%c"),
                     'lat': o.get('coords')[0] + randLat / 100,
                     'lon': o.get('coords')[1] + randLon / 100,
                     'picture': im_b64
@@ -39,7 +44,7 @@ def generate_random_markers_in_municipalities():
 
 def generate_random_amount_of_markers():
     for o in options:
-        for i in range(100):
+        for i in range(10):
             randLat = random.randint(0, 1)
             randLon = random.randint(0, 1)
             req = requests.post(
