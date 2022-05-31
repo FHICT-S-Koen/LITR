@@ -34,7 +34,7 @@ const ResetButton: FC<L.ControlOptions> = (controlOptions) => {
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [map])
 
-	const currentLocation: LatLngTuple = [51.433333, 5.483333] // Get Location of user
+	const currentLocation: LatLngTuple = [51.433333, 5.483333] //TODO: Get Location of user
 	const zoom = 14
 	
 	function handleClick() {
