@@ -70,7 +70,7 @@ const Detection: FC<DetectionProps> = (props) => {
 					Types of litter: {objects.map(e => e.type)} <br></br>
 					Number of detected objects: {objects.length}
 				</div>
-				Latitude: {lat} Longitute: {lon}
+				Latitude: {lat} Longitude: {lon}
 			</div>
 		</Popup>
 	</Marker>
