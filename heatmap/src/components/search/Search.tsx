@@ -5,7 +5,7 @@ import { useMap } from 'react-leaflet';
 
 const searchHtml = () =>
   [
-    "<input id='search' autocomplete='off' list='municipalities' placeholder='Enter Location' class='fixed -translate-x-1/2 left-1/2 mt-2 px-3 py-1.5 text-gray-700 border border-gray-300 rounded focus:border-blue-600 outline-none' />",
+    "<input id='search' autocomplete='off' list='municipalities' placeholder='Enter Location' class='fixed text-base top-0 -translate-x-1/2 left-1/2 mt-2 px-3 py-1.5 text-gray-700 border border-gray-300 rounded focus:border-blue-600 outline-none' />",
     `<datalist id="municipalities">
       ${options.map(m => `<option value='${m.name}'>${m.name}</option>`)}
     </datalist>`
