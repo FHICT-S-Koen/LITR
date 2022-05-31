@@ -1,23 +1,23 @@
 import { LayersControl, MapContainer, TileLayer } from 'react-leaflet'
+import { LatLng, LatLngBounds } from 'leaflet';
 import 'leaflet/dist/leaflet.css'
 import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css'
 import "leaflet-defaulticon-compatibility";
 
+import { FC } from 'react';
 import Detection, { DetectionProps } from '../detection/Detection';
 import SearchControl from '../search/SearchControl';
-import { FC } from 'react';
 import ResetControl from '../ResetControl';
 
 import MarkerClusterGroup from './MarkerClusterGroup'
 import "leaflet.markercluster/dist/leaflet.markercluster.js"
 import "leaflet.markercluster/dist/MarkerCluster.css"
 import "leaflet.markercluster/dist/MarkerCluster.Default.css"
-import { LatLng, LatLngBoundsExpression } from 'leaflet';
 
 const { BaseLayer } = LayersControl;
 
 const CENTER_OF_NETHERLANDS = new LatLng(52.1009, 5.6463)
-const BOUNDS_OF_NETHERLANDS = [[50.6, 3.25], [54, 7.6]] as LatLngBoundsExpression
+const BOUNDS_OF_NETHERLANDS = new LatLngBounds([[50.6, 3.25], [54, 7.6]])
 
 import maps from './maps.json'
 const layers = () => maps.map((m, key) => 
