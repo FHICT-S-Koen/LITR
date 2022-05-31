@@ -4,9 +4,9 @@ import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility
 import "leaflet-defaulticon-compatibility";
 
 import Detection, { DetectionProps } from '../detection/Detection';
-import Search from '../search/Search';
+import SearchControl from '../search/SearchControl';
 import { FC } from 'react';
-import ResetButton from '../ResetButton';
+import ResetControl from '../ResetControl';
 
 import MarkerClusterGroup from './MarkerClusterGroup'
 import "leaflet.markercluster/dist/leaflet.markercluster.js"
@@ -38,8 +38,8 @@ const Map: FC<{ detections: DetectionProps[] }> = ({ detections }) => (
 		<LayersControl position="topright">
 			{layers()}
 		</LayersControl>
-		<Search position="topright" />
-		<ResetButton position="topleft" />
+		<SearchControl position="topright" />
+		<ResetControl position="topleft" />
 		<MarkerClusterGroup>
 			{detections?.map(d => <Detection key={d.id} {...d} />)}
 		</MarkerClusterGroup>

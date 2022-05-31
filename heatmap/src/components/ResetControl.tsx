@@ -9,7 +9,7 @@ const buttonHtml =
 		</svg>
 	</button>`
 
-const ResetButton: FC<L.ControlOptions> = (controlOptions) => {
+const ResetControl: FC<L.ControlOptions> = (controlOptions) => {
 	const map = useMap()
 
 	useEffect(() => {
@@ -44,4 +44,4 @@ const ResetButton: FC<L.ControlOptions> = (controlOptions) => {
 	return null
 }
 
-export default ResetButton
+export default ResetControl

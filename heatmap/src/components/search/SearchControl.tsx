@@ -11,7 +11,7 @@ const searchHtml = () =>
     </datalist>`
   ].join("\n");
 
-const Search: FC<L.ControlOptions> = (controlOptions) => {
+const SearchControl: FC<L.ControlOptions> = (controlOptions) => {
   const map = useMap()
 
   useEffect(() => {
@@ -45,4 +45,4 @@ const Search: FC<L.ControlOptions> = (controlOptions) => {
   return null
 }
 
-export default Search
+export default SearchControl
