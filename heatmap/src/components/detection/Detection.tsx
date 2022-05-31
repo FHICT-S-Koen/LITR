@@ -1,5 +1,4 @@
-import React, { createRef, FC, useEffect } from "react"
-import { useState } from "react"
+import React, { createRef, FC } from "react"
 import { Marker, Popup } from "react-leaflet"
 import { drawBoundingBox } from "./draw"
 
@@ -26,32 +25,42 @@ const Detection: FC<DetectionProps> = (props) => {
 	const {id, objects, detectedAt,	lat, lon} = props
 
 	const canvasRef = createRef<HTMLCanvasElement>()
-	const [picture, setPicture] = useState<string>()
-	const [showBoxes, setShowBoxes] = useState(false)
 
-	useEffect(() => {
+	let boundingBox = true //INFO: using normal state since useState was closing the popup
+
+	const toggleBoundingBoxes = async () => {
+		const res = await fetch(`/api/detection/${id}`)
+		const data = await res.json()
 		if (!canvasRef.current) return
 		const canvas = canvasRef.current
 		const context = canvas.getContext('2d')
-		if (!context || !picture) return
+		if (!context) return
 		const image = new Image()
 		image.onload = () => {
 			canvas.width = image.width;
 			canvas.height = image.height;
 			context.drawImage(image, 0, 0);
-			if (showBoxes)
+			if(boundingBox)
 				drawBoundingBox(canvas, props)
+			boundingBox = !boundingBox
 		}
-		image.src = picture
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [picture, showBoxes])
-
-	const toggleBoundingBoxes = () => setShowBoxes(!showBoxes)
+		image.src = 'data:image/png;base64,' + data.picture
+	}
 
 	const handlePopupopen = async () => {
 		const res = await fetch(`/api/detection/${id}`)
 		const data = await res.json()
-		setPicture('data:image/png;base64,' + data.picture)
+		if (!canvasRef.current) return
+		const canvas = canvasRef.current
+		const context = canvas.getContext('2d')
+		if (!context) return
+		const image = new Image()
+		image.onload = () => {
+			canvas.width = image.width;
+			canvas.height = image.height;
+			context.drawImage(image, 0, 0);
+		}
+		image.src = 'data:image/png;base64,' + data.picture
 	}
 
 	return <Marker position={[lat, lon]} eventHandlers={{popupopen: handlePopupopen}}>
