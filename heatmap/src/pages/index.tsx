@@ -1,7 +1,7 @@
 import { prisma } from "../db"
 import dynamic from "next/dynamic"
 import { DetectionProps } from "../components/detection/Detection"
-const Map = dynamic(() => import("../components/Map"), { ssr:false })
+const Map = dynamic(() => import("../components/map/Map"), { ssr:false })
 
 export async function getServerSideProps() {
   const detections = await prisma.detection.findMany({

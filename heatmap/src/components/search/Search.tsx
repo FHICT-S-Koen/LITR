@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { FC, useEffect } from 'react'
 import L, { Control, LatLngTuple } from 'leaflet'
 import options from './data/options.json'
 import { useMap } from 'react-leaflet';
@@ -11,11 +11,11 @@ const searchHtml = () =>
     </datalist>`
   ].join("\n");
 
-const Search = () => {
+const Search: FC<L.ControlOptions> = (controlOptions) => {
   const map = useMap()
 
   useEffect(() => {
-    const control = new Control()
+    const control = new Control(controlOptions)
 
     control.onAdd = () => {
       const div = L.DomUtil.create("div");

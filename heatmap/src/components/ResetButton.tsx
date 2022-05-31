@@ -1,15 +1,15 @@
 import L, { Control, LatLngTuple } from 'leaflet'
 import { useMap } from 'react-leaflet';
-import { useEffect } from 'react'
+import { FC, useEffect } from 'react'
 
 const buttonHtml =
 	"<button id='button' class='px-3 py-1.5 text-white border border-gray-300 rounded focus:border-blue-600 bg-blue-400 outline-none'>reset</button>"
 
-const ResetButton = () => {
+const ResetButton: FC<L.ControlOptions> = (controlOptions) => {
 	const map = useMap()
 
 	useEffect(() => {
-		const control = new Control()
+		const control = new Control(controlOptions)
 
 		control.onAdd = () => {
 			const div = L.DomUtil.create("div");
