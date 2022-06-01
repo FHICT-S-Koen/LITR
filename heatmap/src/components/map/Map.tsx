@@ -1,6 +1,5 @@
 import { LayersControl, MapContainer, TileLayer } from 'react-leaflet'
 import { LatLng, LatLngBounds } from 'leaflet';
-import 'leaflet/dist/leaflet.css'
 import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css'
 import "leaflet-defaulticon-compatibility";
 
