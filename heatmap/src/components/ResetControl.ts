@@ -24,7 +24,7 @@ const ResetControl = createControlComponent(controlOptions => {
   const map = useMap()
   
 	const handleClick = () =>
-		map.setView([51.433333, 5.483333], 14) //TODO: Get Location of user
+		map.setView([52.1009, 5.6463], 8) //TODO: Get Location of user
   
 	return control
 })
