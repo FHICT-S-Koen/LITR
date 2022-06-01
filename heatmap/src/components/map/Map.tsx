@@ -1,7 +1,5 @@
 import { LayersControl, MapContainer, TileLayer } from 'react-leaflet'
 import { LatLng, LatLngBounds } from 'leaflet';
-import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css'
-import "leaflet-defaulticon-compatibility";
 
 import { FC } from 'react';
 import Detection, { DetectionProps } from '../detection/Detection';
@@ -9,7 +7,6 @@ import SearchControl from '../search/SearchControl';
 import ResetControl from '../ResetControl';
 
 import MarkerClusterGroup from './MarkerClusterGroup'
-import "leaflet.markercluster/dist/leaflet.markercluster.js"
 import "leaflet.markercluster/dist/MarkerCluster.css"
 import "leaflet.markercluster/dist/MarkerCluster.Default.css"
 
