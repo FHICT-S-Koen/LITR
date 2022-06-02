@@ -7,7 +7,7 @@ const list = municipalities.map(m => ({
     coords: [
       parseFloat(m.coords[0]), 
       parseFloat(m.coords[1])],
-    area: parseFloat(m.area)
+    // area: parseFloat(m.area)
 }))
 
 FileSystem.writeFile('options.json', JSON.stringify(list), (error) => {
