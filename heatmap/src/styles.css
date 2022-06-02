@@ -9,7 +9,7 @@
 
 .leaflet-popup-content-wrapper{
 	padding: 0px !important;
-
+	border-radius: 15px !important;
 }
 
 .leaflet-popup-close-button {
