@@ -3,11 +3,16 @@
 @tailwind utilities;
 
 .leaflet-popup-content {
-	margin: 0% !important;
+	margin: 0px !important;
 	width: 400px !important;
-	border-radius: 5px !important; 
+}
+
+.leaflet-popup-content-wrapper{
+	padding: 0px !important;
+
 }
 
 .leaflet-popup-close-button {
-	border-radius: 5px !important;
+	display: none;
 }
+
