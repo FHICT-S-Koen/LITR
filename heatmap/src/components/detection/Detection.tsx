@@ -1,5 +1,5 @@
 import React, { createRef, FC } from "react"
-import { Marker, Popup } from "react-leaflet"
+import { Marker, Popup, useMap} from "react-leaflet"
 import { drawBoundingBox } from "./draw"
 
 interface DetectionProps {
@@ -62,13 +62,17 @@ const Detection: FC<DetectionProps> = (props) => {
 		}
 		image.src = 'data:image/png;base64,' + data.picture
 	}
+	const map = useMap()
+
+	const handlePopupclose = () =>
+		map.closePopup()
 
 	return <Marker position={[lat, lon]} eventHandlers={{popupopen: handlePopupopen}}>
 		<Popup>
 			<canvas 
 				ref={canvasRef}
 				className="w-full h-full rounded-t-[15px] " />	
-			<button className="absolute top-4 left-4 text-white text-center bg-[#00000066] rounded-full p-[6px]">
+			<button onClick={handlePopupclose} className="absolute top-4 left-4 text-white text-center bg-[#00000066] rounded-full p-[6px]">
 				<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="block h-3 w-3 stroke-white stroke-[4px] overflow: visible;" aria-hidden="true" role="presentation" focusable="false"><path d="m6 6 20 20"></path><path d="m26 6-20 20"></path></svg>
 			</button>
 			<button 
