@@ -1,4 +1,4 @@
-import { LayersControl, MapContainer, TileLayer } from 'react-leaflet'
+import { LayersControl, MapContainer, Marker, TileLayer } from 'react-leaflet'
 import { LatLng, LatLngBounds } from 'leaflet';
 
 import { FC } from 'react';
@@ -31,6 +31,8 @@ const config = {
 
 const Map: FC<{ detections: DetectionProps[] }> = ({ detections }) => (
 	<MapContainer {...config} className="h-screen">
+		<Marker position={[51.4509873, 5.4537246]}>
+		</Marker>
 		<LayersControl position="topright">
 			{layers()}
 		</LayersControl>
