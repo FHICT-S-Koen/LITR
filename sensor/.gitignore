@@ -5,5 +5,13 @@
 # python
 __pycache__
 
-# torch
+# model types
+*.pb
+*.h5
 *.pt
+*.onnx
+
+# images
+*.jpg
+*.jpeg
+*.png
