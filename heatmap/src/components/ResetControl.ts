@@ -25,6 +25,11 @@ const ResetControl = createControlComponent(controlOptions => {
   
 	const handleClick = () =>
 		map.setView([52.1009, 5.6463], 8) //TODO: Get Location of user
+	const handleClick = () => {
+    navigator.geolocation.getCurrentPosition(function(position) {    
+		map.setView([position.coords.latitude,  position.coords.longitude],20) //TODO: Get Location of user
+    })
+  }
   
 	return control
 })

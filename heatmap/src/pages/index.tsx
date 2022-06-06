@@ -2,7 +2,7 @@ import { prisma } from "../db"
 import dynamic from "next/dynamic"
 import { DetectionProps } from "../components/detection/Detection"
 import Head from "next/head"
-import { useEffect } from "react"
+
 const Map = dynamic(() => import("../components/map/Map"), { ssr:false })
 
 export async function getServerSideProps() {
@@ -20,13 +20,7 @@ export async function getServerSideProps() {
 }
 
 const Home: React.FC<{detections: DetectionProps[]}> = ({detections}) => {
-  useEffect(() =>{
-    navigator.geolocation.getCurrentPosition(function(position){
-    console.log("Latitude is: ", position.coords.latitude);
-    console.log("Longitude is: ", position.coords.longitude);
-    })
-  }, []);
-  return <>
+    return <>
     <Head>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
       integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="

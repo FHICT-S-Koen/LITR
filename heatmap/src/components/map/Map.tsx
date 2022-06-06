@@ -30,9 +30,7 @@ const config = {
 }
 
 const Map: FC<{ detections: DetectionProps[] }> = ({ detections }) => (
-	<MapContainer {...config} className="h-screen">
-		<Marker position={[51.4509873, 5.4537246]}>
-		</Marker>
+	<MapContainer {...config} className="h-screen">		
 		<LayersControl position="topright">
 			{layers()}
 		</LayersControl>
