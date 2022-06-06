@@ -7,11 +7,11 @@ function drawBoundingBox(canvas: HTMLCanvasElement, props: DetectionProps) {
 	props.objects.map(o => {
 		context.strokeStyle = "red"
 		context.fillStyle = "red"
-		context.font = "26px Helvetica"
+		context.font = "24px sans"
 		context.lineWidth = 5
 		const labelText = o.type + " " + Math.round(o.confidence * 100) + "%"
 		if (o.yMin > 28){
-			context.fillRect(o.xMin, o.yMin - 28, context.measureText(labelText).width, 30)
+			context.fillRect(o.xMin-2, o.yMin - 32, context.measureText(labelText).width + 4, 30)
 			context.fillStyle = "white"
 			context.fillText(labelText, o.xMin, o.yMin - 8)
 		}		
