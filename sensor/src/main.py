@@ -5,7 +5,6 @@ import cv2
 import serial
 import numpy as np
 from time import time
-from matplotlib import pyplot as plt
 
 # our modules
 import sensor
