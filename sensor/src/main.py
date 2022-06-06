@@ -4,6 +4,7 @@ import torch
 import cv2
 import serial
 import numpy as np
+from time import time
 from matplotlib import pyplot as plt
 
 # our modules
@@ -35,35 +36,42 @@ while True:
 		ser = serial.Serial('/dev/ttyUSB0', 9600, timeout=1)
 		print("GPS connected")
 
+		# start timer
+		start = time()
+		count = 0
+
 		# --------------------- START DETECTING ------------------------ #
 		while cap.isOpened():
 			ret, frame = cap.read()
-			base_img = copy(frame)
 
-			# Check frame for objects
-			results = model(frame)
+			if ret:
+				base_img = copy(frame)
+				# Check frame for objects
+				results = model(frame)
+				count += 1
+				print(f"FPS: {count/(time() - start)}")
+				# Show results in window
+				# cv2.imshow('YOLOv5s', np.squeeze(results.render()))
 
-			# Show results in window
-			# cv2.imshow('YOLOv5s', np.squeeze(results.render()))
+				# Reformat results to pandas dataframe
+				df = results.pandas().xyxy[0]
 
-			# Reformat results to pandas dataframe
-			df = results.pandas().xyxy[0]
+				# If empty continue with next frame
+				# else send detection data
+				if (df.empty): continue
 
-			# If empty continue with next frame
-			# else send detection data
-			if (df.empty): continue
-
-			lat, lon = sensor.get_location(ser)
-			# To get the image with bounding box use: results.render()[0]
-			data = Detection(df, lat, lon, base_img)
-			res = data.send(API_URL, SECRET_KEY)
-			
-			print(
-				f'[ status: {res.status_code} ]' +
-				f'[ {data.detectedAt} ]' +
-				f'[ object(s): {len(data.objects)} ]' +
-				f'[ lat: {data.lat} - lon: {data.lon} ]'
-				)
+				lat, lon = sensor.get_location(ser)
+				# To get the image with bounding box use: results.render()[0]
+				data = Detection(df, lat, lon, base_img)
+				res = data.send(API_URL, SECRET_KEY)
+				
+				print(
+					f'[ status: {res.status_code} ]' +
+					f'[ {data.detectedAt} ]' +
+					f'[ object(s): {len(data.objects)} ]' +
+					f'[ lat: {data.lat} - lon: {data.lon} ]'
+					)
+			else: break
 
 	except:
 		cap.release()
