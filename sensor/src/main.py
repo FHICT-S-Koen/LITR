@@ -1,7 +1,6 @@
 from copy import copy
 import time
 import torch
-import requests
 import cv2
 import serial
 import numpy as np
@@ -57,11 +56,9 @@ while True:
 			if (df.empty): continue
 
 			lat, lon = sensor.get_location(ser)
+			# To get the image with bounding box use: results.render()[0]
 			data = Detection(df, lat, lon, base_img)
-			res = requests.post(
-				url=API_URL, 
-				data=data.json_serialize(), # To get the image with bounding box use: results.render()[0]
-				headers={"Authorization": SECRET_KEY, "Content-Type": "application/json"})
+			res = data.send(API_URL, SECRET_KEY)
 			
 			print(
 				f'[ status: {res.status_code} ]' +

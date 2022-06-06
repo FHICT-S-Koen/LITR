@@ -2,6 +2,7 @@ import json
 import datetime
 import base64
 import cv2
+import requests
 
 class Detection:
     def __init__(self, df, lat, lon, bitmap):
@@ -28,3 +29,9 @@ class Detection:
 
     def json_serialize(self):
         return json.dumps(self.__dict__)
+
+    def send(self, api_url, secret_key):
+        return requests.post(
+            url=api_url, 
+            data=self.json_serialize(),
+            headers={"Authorization": secret_key, "Content-Type": "application/json"})
