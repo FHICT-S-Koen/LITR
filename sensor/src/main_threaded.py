@@ -29,19 +29,16 @@ model.classes = [39]
 API_URL, SECRET_KEY = _utils.get_env(['API_URL', 'SECRET_KEY'])
 
 # worker function
-def task(detections):
-	for d in detections:
-		df = d.pandas().xyxy[0]
-		if df.empty: continue
-		data = Detection(df, lat, lon, base_img)
-		res = data.send(API_URL, SECRET_KEY)
-		
-		print(
-			f'[ status: {res.status_code} ]' +
-			f'[ {data.detectedAt} ]' +
-			f'[ object(s): {len(data.objects)} ]' +
-			f'[ lat: {data.lat} - lon: {data.lon} ]'
-			)
+def task(detection):
+	results, lat, lon, base_img = detection
+	data = Detection(results.pandas().xyxy[0], lat, lon, base_img)
+	res = data.send(API_URL, SECRET_KEY)
+	print(
+		f'[ status: {res.status_code} ]' +
+		f'[ {data.detectedAt} ]' +
+		f'[ object(s): {len(data.objects)} ]' +
+		f'[ lat: {data.lat} - lon: {data.lon} ]'
+		)
 
 detections = []
 
@@ -71,13 +68,14 @@ while True:
 				count += 1
 				print(f"FPS: {count/(time() - start)}")
 				# after five detections offload to worker threads
-				if len(detections) == 5:
+				if len(detections) == 10:
 					executor.map(task, detections)
 					detections.clear()
 				# get location
 				lat, lon = sensor.get_location(ser)
 				# append data to offload
-				detections.append([results, lat, lon, base_img]) # To get the image with bounding box use: results.render()[0]
+				if not results.pandas().xyxy[0].empty:
+					detections.append([results, lat, lon, base_img]) # To get the image with bounding box use: results.render()[0]
 				# Show results in window
 				# cv2.imshow('YOLOv5s', np.squeeze(results.render()))
 			else: break
