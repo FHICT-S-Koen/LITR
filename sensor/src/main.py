@@ -37,8 +37,6 @@ while True:
 
 		# --------------------- START DETECTING ------------------------ #
 		while cap.isOpened():
-			if cv2.waitKey(10) & 0xFF == ord('h'):
-				break
 			ret, frame = cap.read()
 			base_img = copy(frame)
 
