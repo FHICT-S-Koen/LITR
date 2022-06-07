@@ -5,10 +5,10 @@ import { createControlComponent } from '@react-leaflet/core'
 const SliderControl = createControlComponent(controlOptions => {
     const control = new Control(controlOptions)
     const html = 
-    `<input type='range' min='1' max='10' class='leaflet-bar slider' />`
+    `<input type='range' min='1' max='10' class='leaflet-bar slider'/>`
     
     control.onAdd = () => {
-      const div = L.DomUtil.create("div", "z-0");
+      const div = L.DomUtil.create("div", "bg-white p-1 rounded");
       div.innerHTML = html
   
       div.addEventListener("mousedown", L.DomEvent.stopPropagation)

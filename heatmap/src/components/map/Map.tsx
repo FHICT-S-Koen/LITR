@@ -37,7 +37,7 @@ const Map: FC<{ detections: DetectionProps[] }> = ({ detections }) => (
 		</LayersControl>
 		<SearchControl position="topright" />
 		<ResetControl position="topleft" />
-		<SliderControl position="bottomleft"/>
+		<SliderControl position="topright"/>
 		<MarkerClusterGroup>
 			{detections?.map(d => <Detection key={d.id} {...d} />)}
 		</MarkerClusterGroup>
