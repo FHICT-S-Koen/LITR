@@ -16,6 +16,7 @@ const CENTER_OF_NETHERLANDS = new LatLng(52.1009, 5.6463)
 const BOUNDS_OF_NETHERLANDS = new LatLngBounds([[50.6, 3.25], [54, 7.6]])
 
 import maps from './maps.json'
+import SliderControl from '../SliderControl';
 const layers = () => maps.map((m, key) => 
 	<BaseLayer key={key} checked={m.checked} name={m.name}>
 		<TileLayer attribution={m.attribution} url={m.url} bounds={BOUNDS_OF_NETHERLANDS} minNativeZoom={8} />
@@ -36,6 +37,7 @@ const Map: FC<{ detections: DetectionProps[] }> = ({ detections }) => (
 		</LayersControl>
 		<SearchControl position="topright" />
 		<ResetControl position="topleft" />
+		<SliderControl position="bottomleft"/>
 		<MarkerClusterGroup>
 			{detections?.map(d => <Detection key={d.id} {...d} />)}
 		</MarkerClusterGroup>
