@@ -11,7 +11,7 @@ const SliderControl = createControlComponent(controlOptions => {
       const div = L.DomUtil.create("div", "bg-white p-1 rounded");
       div.innerHTML = html
   
-      div.addEventListener("mousedown", L.DomEvent.stopPropagation)
+      L.DomEvent.disableClickPropagation(div)
       div.addEventListener("keyup", handleChange)
   
       return div;

@@ -16,7 +16,7 @@ const SearchControl = createControlComponent(controlOptions => {
     const div = L.DomUtil.create("div", "z-0");
     div.innerHTML = html
 
-    div.addEventListener("mousedown", L.DomEvent.stopPropagation)
+    L.DomEvent.disableClickPropagation(div)
     div.addEventListener("keyup", handleChange)
 
     return div;

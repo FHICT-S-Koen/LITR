@@ -15,7 +15,7 @@ const ResetControl = createControlComponent(controlOptions => {
     const div = L.DomUtil.create("div");
     div.innerHTML = html
 
-    div.addEventListener("mousedown", L.DomEvent.stopPropagation)
+    L.DomEvent.disableClickPropagation(div)
     div.addEventListener("click", handleClick)
 
     return div;
