@@ -20,3 +20,6 @@ __pycache__
 *.mov
 *.MOV
 *.mp4
+
+# yolov5 utltralytics repo
+yolov5
