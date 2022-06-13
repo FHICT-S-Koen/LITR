@@ -11,7 +11,7 @@ const SliderControl:FC<{ position:ControlPosition, setFilter: (value:number) => 
       <div id='slider-tooltip' class='ml-9 -mt-[18px] absolute top-5 leaflet-bar'>
             <p id='slider-tooltip-text' class='bg-white rounded p-[5px]'>Today</p>
       </div>
-      <div class='leaflet-bar bg-white -translate-x-1/2 ml-[17px] rotate-90 mt-[63px] py-[6px] px-1 h-[34px] rounded'>
+      <div class='leaflet-bar bg-white -translate-x-1/2 ml-[17px] rotate-90 mt-[63px] py-[7px] px-1 h-[34px] rounded'>
             <input type='range' min='1' max='4' step='1' value='1' class='leaflet-bar slider'/>
             
       </div>
