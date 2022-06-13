@@ -2,6 +2,12 @@ import React, { createRef, FC } from "react"
 import { Marker, Popup, useMap } from "react-leaflet"
 import { drawBoundingBox } from "./draw"
 
+import en from 'javascript-time-ago/locale/en.json'
+import TimeAgo from "javascript-time-ago"
+import ReactTimeAgo from "react-time-ago"
+
+TimeAgo.addDefaultLocale(en)
+
 interface DetectionProps {
 	id: number
 	objects: {
@@ -66,30 +72,6 @@ const Detection: FC<DetectionProps> = (props) => {
 	const handlePopupclose = () =>
 		map.closePopup()
 
-	const secondsToElapsedTime = () => {
-		const seconds = Math.round((Date.now()-detectedAt*1000)/1000)
-		if (seconds < 60) 
-			return `${seconds} seconds ago`
-		const leftoverSeconds = seconds % 60
-		const minutes = Math.floor(seconds / 60)
-		if (minutes < 60) 
-			return `${minutes} minutes and ${leftoverSeconds} seconds ago`
-		const leftoverMinutes = minutes % 60
-		const hours = Math.floor(minutes / 60)
-		if (hours < 24) 
-			return `${hours} hours and ${leftoverMinutes} minutes ago`
-		const leftoverHours = hours % 24
-		const days = Math.floor(hours / 24)
-		if (days < 7) 
-			return `${days} days and ${leftoverHours} hours ago`
-		const leftoverDays = days % 7
-		const weeks = Math.floor(days / 7)
-		if (days < 365) 
-			return `${weeks} weeks and ${leftoverDays} days ago`
-		const years = Math.round(days / 365)
-		return years + " years ago"
-	}
-
 	const reduceTypesOfLitterToUniqueList = () => {
 		const types = objects.map(o => o.type)
 		return types.reduce(
@@ -112,7 +94,7 @@ const Detection: FC<DetectionProps> = (props) => {
 			</button>
 			<div className="p-2 rounded-b-[15px] font-sans text-base">
 				<div className="text-gray-500 text-sm">
-					{secondsToElapsedTime()}
+					<ReactTimeAgo date={detectedAt*1000} locale="en-US"/>
 				</div>
 				<div className="leading-6 text-gray-700 my-2">
 					Amount of litter: {objects.length} <br></br>
