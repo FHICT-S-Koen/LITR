@@ -1,7 +1,7 @@
 import { LayersControl, MapContainer, Marker, TileLayer } from 'react-leaflet'
 import { LatLng, LatLngBounds } from 'leaflet';
 
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import Detection, { DetectionProps } from '../detection/Detection';
 import SearchControl from '../search/SearchControl';
 import ResetControl from '../ResetControl';
@@ -30,18 +30,35 @@ const config = {
 	scrollWheelZoom: true
 }
 
-const Map: FC<{ detections: DetectionProps[] }> = ({ detections }) => (
-	<MapContainer {...config} className="h-screen">		
+const Map: FC<{ detections: DetectionProps[] }> = ({ detections }) => {
+	const [filteredDetections, setDetections] = useState<JSX.Element[]>(
+		detections?.map(d => {
+			if ((Date.now() - 86400000) / 1000 < d.detectedAt)
+				return <Detection key={d.id} {...d} />
+			else return <div key={d.id}></div>
+		})
+	)	
+	const filterTime = (value:number) => {
+
+	const filteredDetections = detections?.map(d => {
+			if (value < d.detectedAt)
+				return <Detection key={d.id} {...d} />
+			else return <div key={d.id}></div>
+		})		
+	setDetections(filteredDetections)
+	}
+
+	return <MapContainer {...config} className="h-screen">		
 		<LayersControl position="topright">
 			{layers()}
 		</LayersControl>
 		<SearchControl position="topright" />
 		<ResetControl position="topleft" />
-		<SliderControl position="topleft"/>
+		<SliderControl position="topleft" setFilter={filterTime}/>
 		<MarkerClusterGroup>
-			{detections?.map(d => <Detection key={d.id} {...d} />)}
+			{filteredDetections}
 		</MarkerClusterGroup>
 	</MapContainer>
-)
+}
 
 export default Map
