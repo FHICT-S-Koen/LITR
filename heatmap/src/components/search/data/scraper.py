@@ -19,7 +19,10 @@ error_ls = []
 def get_municipality_coords_url(municipality, suffixes, response_codes):
     for suffix in suffixes:
         try:
-            response = requests.get("https://en.wikipedia.org/wiki/" + municipality + suffix)
+            if (municipality == 'Altena'): # Has not been tested yet
+                response = requests.get("https://en.wikipedia.org/wiki/Altena,_North_Brabant")
+            else:
+                response = requests.get("https://en.wikipedia.org/wiki/" + municipality + suffix)
             soup = BeautifulSoup(response.text, 'html.parser')
             coords_url = soup.find('span', {'class': "geo-default"}).findParent()['href']
             response_codes.append(response.status_code)

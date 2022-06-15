@@ -5,5 +5,21 @@
 # python
 __pycache__
 
-# torch
+# model types
+*.pb
+*.h5
 *.pt
+*.onnx
+
+# images
+*.jpg
+*.jpeg
+*.png
+
+# videos
+*.mov
+*.MOV
+*.mp4
+
+# yolov5 utltralytics repo
+yolov5

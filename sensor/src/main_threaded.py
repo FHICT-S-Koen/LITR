@@ -1,10 +1,11 @@
-from copy import copy
 import time
 import torch
 import cv2
 import serial
 import numpy as np
+from copy import copy
 from time import time
+from concurrent.futures import ThreadPoolExecutor
 
 # our modules
 import sensor
@@ -19,13 +20,30 @@ print('Using device:', device, '\n')
 model = torch.hub.load('ultralytics/yolov5', 'yolov5s')
 
 # Set confidence treshold
-model.conf = 0.30
+model.conf = 0.6
 
 # Only detect bottles
 model.classes = [39]
 
 # Get environment variables
 API_URL, SECRET_KEY = _utils.get_env(['API_URL', 'SECRET_KEY'])
+
+# worker function
+def task(detection):
+	results, lat, lon, base_img = detection
+	data = Detection(results.pandas().xyxy[0], lat, lon, base_img)
+	res = data.send(API_URL, SECRET_KEY)
+	print(
+		f'[ status: {res.status_code} ]' +
+		f'[ {data.detectedAt} ]' +
+		f'[ object(s): {len(data.objects)} ]' +
+		f'[ lat: {data.lat} - lon: {data.lon} ]'
+		)
+
+detections = []
+
+# init thread pool
+executor = ThreadPoolExecutor(1)
 
 while True:
 	try:
@@ -42,34 +60,24 @@ while True:
 		# --------------------- START DETECTING ------------------------ #
 		while cap.isOpened():
 			ret, frame = cap.read()
-
+			
 			if ret:
-				base_img = copy(frame)
-				# Check frame for objects
+				base_img = copy(frame) # necessary
+				# detect
 				results = model(frame)
 				count += 1
 				print(f"FPS: {count/(time() - start)}")
+				# after five detections offload to worker threads
+				if len(detections) == 10:
+					executor.map(task, detections)
+					detections.clear()
+				# get location
+				lat, lon = sensor.get_location(ser)
+				# append data to offload
+				if not results.pandas().xyxy[0].empty:
+					detections.append([results, lat, lon, base_img]) # To get the image with bounding box use: results.render()[0]
 				# Show results in window
 				# cv2.imshow('YOLOv5s', np.squeeze(results.render()))
-
-				# Reformat results to pandas dataframe
-				df = results.pandas().xyxy[0]
-
-				# If empty continue with next frame
-				# else send detection data
-				if (df.empty): continue
-
-				lat, lon = sensor.get_location(ser)
-				# To get the image with bounding box use: results.render()[0]
-				data = Detection(df, lat, lon, base_img)
-				res = data.send(API_URL, SECRET_KEY)
-				
-				print(
-					f'[ status: {res.status_code} ]' +
-					f'[ {data.detectedAt} ]' +
-					f'[ object(s): {len(data.objects)} ]' +
-					f'[ lat: {data.lat} - lon: {data.lon} ]'
-					)
 			else: break
 
 	except:

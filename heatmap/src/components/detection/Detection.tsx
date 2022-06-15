@@ -1,8 +1,12 @@
-import React, { FC, useContext, useEffect } from "react"
-import { useRef, useState } from "react"
-import { Marker, Popup } from "react-leaflet"
-import { Context } from "../../pages/Store"
+import React, { createRef, FC } from "react"
+import { Marker, Popup, useMap } from "react-leaflet"
 import { drawBoundingBox } from "./draw"
+
+import en from 'javascript-time-ago/locale/en.json'
+import TimeAgo from "javascript-time-ago"
+import ReactTimeAgo from "react-time-ago"
+
+TimeAgo.addDefaultLocale(en)
 
 interface DetectionProps {
 	id: number
@@ -17,7 +21,7 @@ interface DetectionProps {
 			confidence: number
 			type: string
 		}[]
-	detectedAt: string
+	detectedAt: number
 	lat: number
 	lon: number
 	picture: string
@@ -25,63 +29,76 @@ interface DetectionProps {
 
 const Detection: FC<DetectionProps> = (props) => {
 	const {id, objects, detectedAt,	lat, lon} = props
-	const store = useContext(Context)
 
-	const canvasRef = React.createRef<HTMLCanvasElement>();
-	
-	const [isLoading, setLoading] = useState(false)
-	const [showBoxes, setShowBoxes] = useState(false)
-	const [{ width, height }, setSize] = useState({ width: 0, height: 0 })
+	const canvasRef = createRef<HTMLCanvasElement>()
+	let boundingBox = true //INFO: using normal state since useState was closing the popup
 
-	useEffect(() => {
-		if (!canvasRef.current || !store.state.picture) return
-		if (!isLoading) {
-			const context = canvasRef.current.getContext('2d')
-			if (!context) return
-			
-			const image = new Image()
-			image.src = 'data:image/png;base64,' + store.state.picture
-			
-			const width = image.width
-			const height = image.height
-			
-			canvasRef.current.width = width
-			canvasRef.current.height = height
-			
-			setSize({width, height})
-			context.drawImage(image, 0, 0, width, height)
+	const toggleBoundingBoxes = async () => {
+		const res = await fetch(`/api/detection/${id}`)
+		const data = await res.json()
+		if (!canvasRef.current) return
+		const canvas = canvasRef.current
+		const context = canvas.getContext('2d')
+		if (!context) return
+		const image = new Image()
+		image.onload = () => {
+			canvas.width = image.width;
+			canvas.height = image.height;
+			context.drawImage(image, 0, 0);
+			if(boundingBox)
+				drawBoundingBox(canvas, props)
+			boundingBox = !boundingBox
 		}
-		if (showBoxes)
-			drawBoundingBox(canvasRef.current, props)
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [canvasRef, isLoading, showBoxes])
-
-	const onClick = () => {
-		setLoading(true)
-		fetch(`/api/detection/${id}`)
-		  	.then(res => res.json())
-			.then((data) => {
-				store.dispatch({type: "setPicture", payload: data.picture}),
-				setLoading(false)
-			})
+		image.src = 'data:image/png;base64,' + data.picture
 	}
 
-	const toggleBoundingBoxes = () => setShowBoxes(!showBoxes)
+	const handlePopupopen = async () => {
+		const res = await fetch(`/api/detection/${id}`)
+		const data = await res.json()
+		if (!canvasRef.current) return
+		const canvas = canvasRef.current
+		const context = canvas.getContext('2d')
+		if (!context) return
+		const image = new Image()
+		image.onload = () => {
+			canvas.width = image.width;
+			canvas.height = image.height;
+			context.drawImage(image, 0, 0);
+		}
+		image.src = 'data:image/png;base64,' + data.picture
+	}
 
-	return <Marker position={[lat, lon]} eventHandlers={{click: onClick}}>
+	const map = useMap()
+	const handlePopupclose = () =>
+		map.closePopup()
+
+	const reduceTypesOfLitterToUniqueList = () => {
+		const types = objects.map(o => o.type)
+		return types.reduce(
+			(acc: string[], curr) =>
+			  acc.find((v) => v === curr) ? acc : [...acc, curr],
+			[]
+		).join(", ")
+	}
+
+	return <Marker position={[lat, lon]} eventHandlers={{popupopen: handlePopupopen}}>
 		<Popup>
-			{!isLoading && <canvas className="w-full h-full rounded-t-[5px] outline outline-1" ref={canvasRef} width={width} height={height}></canvas>}
-			<button className="w-full font-bold py-2 mt-0.5 shadow hover:shadow-md" onClick={toggleBoundingBoxes}>show bounding box</button>
-			<div className="p-2 font-bold text-lg">
-				Details
-			</div>
-			<div className="p-2 rounded-b-[5px] text-base">Detected at: {detectedAt}
-				<div className="leading-6 text-gray-700 my-2">
-					Types of litter: {objects.map(e => e.type)} <br></br>
-					Number of detected objects: {objects.length}
+			<canvas ref={canvasRef} className="w-full h-full rounded-t-[15px]"/>	
+			<button onClick={handlePopupclose} className="absolute top-4 left-4 text-white text-center bg-[#00000066] rounded-full p-[6px]">
+				<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 stroke-white stroke-[4px] overflow: visible;" aria-hidden="true" role="presentation" focusable="false"><path d="m6 6 20 20"></path><path d="m26 6-20 20"></path></svg>
+			</button>
+			<button 
+				onClick={toggleBoundingBoxes}
+				className="w-full font-bold font-sans py-2 mt-0.5 shadow hover:shadow-md">
+				show bounding box
+			</button>
+			<div className="p-2 rounded-b-[15px] font-sans text-base">
+				<div className="text-gray-500 text-sm">
+					<ReactTimeAgo date={detectedAt*1000} locale="en-US"/>
 				</div>
-				<div className="paragraph-normal text-gray-600">
-					Latitude: {lat} Longitute: {lon}
+				<div className="leading-6 text-gray-700 my-2">
+					Amount of litter: {objects.length} <br></br>
+					Types of litter: {reduceTypesOfLitterToUniqueList()}
 				</div>
 			</div>
 		</Popup>

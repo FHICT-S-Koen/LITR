@@ -2,6 +2,7 @@ import json
 import datetime
 import base64
 import cv2
+import requests
 
 class Detection:
     def __init__(self, df, lat, lon, bitmap):
@@ -12,7 +13,7 @@ class Detection:
         self.picture = self.encode_bitmap_to_base64(bitmap)
 
     def get_local_time(self):
-        return datetime.datetime.now().strftime("%c")
+        return int(round(datetime.datetime.now().timestamp()))
 
     def reformat_dataframe(self, df):
         df.pop('class')
@@ -28,3 +29,9 @@ class Detection:
 
     def json_serialize(self):
         return json.dumps(self.__dict__)
+
+    def send(self, api_url, secret_key):
+        return requests.post(
+            url=api_url, 
+            data=self.json_serialize(),
+            headers={"Authorization": secret_key, "Content-Type": "application/json"})
