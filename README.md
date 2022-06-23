@@ -43,7 +43,7 @@ interacts. <br>
   <thead>
     <tr>
       <th>Description</th>
-      <th>C4</th>
+      <th>Container diagram</th>
     </tr>
   </thead>
   <tbody>
