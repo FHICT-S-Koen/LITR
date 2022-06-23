@@ -40,6 +40,12 @@ For our software system, we made the following C4-container-diagram, describing 
 interacts. <br>
 
 <table>
+  <thead>
+    <tr>
+      <th>Description</th>
+      <th>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;C4&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;</th>
+    </tr>
+  </thead>
   <tbody>
     <tr>
     <td>
