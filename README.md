@@ -40,9 +40,9 @@ You will have to flash your Jetson with a JetPack SDK corresponding with the CUD
 If you want to run CUDA on the Jetson, you could make use of the l4t-pytorch images, containing Pytorch and torchvision pre-installed in a 3.6 Python environment. You will also have to make sure to maintain the correct python library/module versions as some libraries won't work in particular python versions.<br>
 - https://catalog.ngc.nvidia.com/orgs/nvidia/containers/l4t-pytorch
 
-A video of the final product can be seen here: https://drive.google.com/drive/folders/1AE9gQe00VmUOt-cTsj99FegoZDUd5Omj?usp=sharing
-Documentation: https://drive.google.com/drive/folders/13Hvu0HvZMFe8924iIHaNt1IoE8Jhh-DD?usp=sharing
-Dataset: https://app.roboflow.com/k-s/litr-eleku/22
+Video of the final product: https://drive.google.com/drive/folders/1AE9gQe00VmUOt-cTsj99FegoZDUd5Omj?usp=sharing <br>
+Documentation: https://drive.google.com/drive/folders/13Hvu0HvZMFe8924iIHaNt1IoE8Jhh-DD?usp=sharing <br>
+Dataset: https://app.roboflow.com/k-s/litr-eleku/22 <br>
 
 ## Software system
 ![container-diagram](http://www.plantuml.com/plantuml/png/bL9Daz9043rlVaNBYIs5NDQBfqMWNAomH9BLsbDgacbXS38pDTCXKfR_tHvW5QpouAsxypxwJUS-aF3KjHgcTzLSOuk6Gl9AcKPt4c5BvCAxDFMY7syKRRkw2-WRQuXnuyQsgTF2HFueaDIgJgTtepoEdfPPsef0w7bKJPaXb44_TenDacpol7eggo-Byg7AvX_cZxFXRPBaw8CrmsZn1WPJZS8eim5kzwh10S_ABO93wpH2lxNGH0Xq3hGYTXeFMAGui6bRlRUTaS8VXdKi_879sQ9SZxOeg1LkSFiZkVczrJ0umO22tJIESh51c3YdLID8MHEDroWQWjTG7XmMZLUEuZJtTgya1X1mreMz4a2yPOyrrDxsuRpMXTaEYMCoVR4gEPm9reUezhpALlktLxgdN22Hi8chW1GaeB5QSuyIwWFOUiVr1QIr4dNqlBaq5Kwny2HVHFr7_4xZNU0ykLUX5R1QBqyfoIlSnq16GkyLSHdJlAIBzd_5cTL3MJDtnfzg4OvdocsWZSVYKnQxWgp_XyxF95cZhcRdcv_Ey5bXVmMFXYVO4N2AiXJVM9G3GIEqPhoDNX-BrMFwK9PvyOVqyjx_oplYZzdu-ZB0Ls_RguUnCS8z6id_z2y0%20%22C4_Elements%22)
