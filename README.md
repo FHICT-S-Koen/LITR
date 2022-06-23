@@ -10,6 +10,11 @@ In this project we are trying to combat this by making a product that detects an
 
 Our product focuses on the detection of plastic bottles, since this makes up for the most harmful litter and takes a long time to decompose, about 400 to 500 years.
 
+## Shared Folders
+- [Video of the final product](https://drive.google.com/drive/folders/1AE9gQe00VmUOt-cTsj99FegoZDUd5Omj?usp=sharing)
+- [Documentation](https://drive.google.com/drive/folders/13Hvu0HvZMFe8924iIHaNt1IoE8Jhh-DD?usp=sharing) 
+- [Dataset](https://drive.google.com/drive/folders/10EfykFGg2A3XUdsAD8U7QPi4LKihlV8W?usp=sharing)
+
 ## Technologies
 We made use of object detection, web application and data science for the realization. <br>
 
@@ -65,10 +70,6 @@ You will have to flash your Jetson with a JetPack SDK corresponding with the CUD
 If you want to run CUDA on the Jetson, you could make use of the l4t-pytorch images, containing Pytorch and torchvision pre-installed in a 3.6 Python environment. You will also have to make sure to maintain the correct python library/module versions as some libraries won't work in particular python versions.<br>
 - https://catalog.ngc.nvidia.com/orgs/nvidia/containers/l4t-pytorch
 
-### Shared Folders
-- [Video of the final product](https://drive.google.com/drive/folders/1AE9gQe00VmUOt-cTsj99FegoZDUd5Omj?usp=sharing)
-- [Documentation](https://drive.google.com/drive/folders/13Hvu0HvZMFe8924iIHaNt1IoE8Jhh-DD?usp=sharing) 
-- [Dataset](https://drive.google.com/drive/folders/10EfykFGg2A3XUdsAD8U7QPi4LKihlV8W?usp=sharing)
 
 ## References
 
