@@ -10,6 +10,7 @@ The Jetson AGX Xavier is used to run the model outside.
 Furthermore we used a Serial GPS module connected to the Arduino UNO and a camera mounted on the Jetson Xavier, to retrieve the location and frames data. 
 
 Documentation: https://drive.google.com/drive/folders/13Hvu0HvZMFe8924iIHaNt1IoE8Jhh-DD?usp=sharing
+
 Dataset: https://app.roboflow.com/k-s/litr-eleku/22
 
 ## Software system
