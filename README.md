@@ -11,9 +11,8 @@ In this project we are trying to combat this by making a product that detects an
 Our product focuses on the detection of plastic bottles, since this makes up for the most harmful litter and takes a long time to decompose, about 400 to 500 years.
 
 ## Technologies
-We made use of object detection, web application and data science for the realization.
+We made use of object detection, web application and data science for the realization. <br>
 
-### Software
 The web application was built with React/NextJS. <br> NextJS lets you build server-side rendering and static web applications using React. We used TypeScript, as this makes it easy to find type-conflicts and makes building the project more secure as it checks for types.<br>
 - https://reactjs.org/
 - https://nextjs.org/
@@ -31,7 +30,33 @@ To run the model, we used PyTorch which is an open source machine learning frame
 - https://www.python.org
 - https://pytorch.org/
 
+### Software
+For our software system, we made the following C4-container-diagram, describing what technologies we use and how each container within the system
+interacts.
+<br>
+
+Our sensor runs our custom object detection model for detecting plastic bottles, using a base version of the pre-trained model Yolov5. <br>
+The data collected by the model will be sent to the API.<br>
+API We figured that Next.js would be a great fit, since a Monolithic application is all we need. <br>
+We want to work on a per-municipality basis, so each municipality has their own API/data. <br>
+This also makes deployment much simpler since Next.js acts as a backend that serves the React SPA to the user, which allows for a single deployment workflow. 
+<br>
+For our database, we use PostgreSQL with an ORM called Prisma to query our data using our node backend (Next.js). <br>
+Prisma includes a cloud based DBMS, which makes it easy to interact with the data in the browser. <br>
+
+Within our single-page-application, we use a JavaScript library called Leaflet (in our case, React Leaflet). <br>
+Leaflet allows us to use features like showing grouped markers with litter data on a geographical map. <br>
+
+![image](https://user-images.githubusercontent.com/48807736/175287274-602f7094-67cb-498c-a616-2bf37d210eb9.png)
+
+
 ### Hardware
+For the sensor, we made the following hardware decisions:
+On the Jetson Xavier, which is a computer specialised for running AI models, we run our Python script which contains the object detection model. <br>
+When we detect a plastic bottle, we send the data along with the location from the GPS module to our API for displaying the data on our visual heatmap. <br>
+
+![image](https://user-images.githubusercontent.com/48807736/175286686-3c3be4b3-c7f3-48ac-8896-f3fbc425d111.png)
+
 We wrote a dockerfile to push and run the object detection script on the Jetson Xavier, to detect the clear plastic bottles with the on-mounted camera. <br>
 
 A problem we came across when running the object detection model on the Jetson, is to make use of the CUDA (GPU), instead of the CPU when detecting objects.<br> 
@@ -41,12 +66,9 @@ If you want to run CUDA on the Jetson, you could make use of the l4t-pytorch ima
 - https://catalog.ngc.nvidia.com/orgs/nvidia/containers/l4t-pytorch
 
 ### Shared Folders
-Video of the final product: https://drive.google.com/drive/folders/1AE9gQe00VmUOt-cTsj99FegoZDUd5Omj?usp=sharing <br>
-Documentation: https://drive.google.com/drive/folders/13Hvu0HvZMFe8924iIHaNt1IoE8Jhh-DD?usp=sharing <br>
-Dataset: https://app.roboflow.com/k-s/litr-eleku/22 <br>
-
-## Software system
-![container-diagram](http://www.plantuml.com/plantuml/png/bL9Daz9043rlVaNBYIs5NDQBfqMWNAomH9BLsbDgacbXS38pDTCXKfR_tHvW5QpouAsxypxwJUS-aF3KjHgcTzLSOuk6Gl9AcKPt4c5BvCAxDFMY7syKRRkw2-WRQuXnuyQsgTF2HFueaDIgJgTtepoEdfPPsef0w7bKJPaXb44_TenDacpol7eggo-Byg7AvX_cZxFXRPBaw8CrmsZn1WPJZS8eim5kzwh10S_ABO93wpH2lxNGH0Xq3hGYTXeFMAGui6bRlRUTaS8VXdKi_879sQ9SZxOeg1LkSFiZkVczrJ0umO22tJIESh51c3YdLID8MHEDroWQWjTG7XmMZLUEuZJtTgya1X1mreMz4a2yPOyrrDxsuRpMXTaEYMCoVR4gEPm9reUezhpALlktLxgdN22Hi8chW1GaeB5QSuyIwWFOUiVr1QIr4dNqlBaq5Kwny2HVHFr7_4xZNU0ykLUX5R1QBqyfoIlSnq16GkyLSHdJlAIBzd_5cTL3MJDtnfzg4OvdocsWZSVYKnQxWgp_XyxF95cZhcRdcv_Ey5bXVmMFXYVO4N2AiXJVM9G3GIEqPhoDNX-BrMFwK9PvyOVqyjx_oplYZzdu-ZB0Ls_RguUnCS8z6id_z2y0%20%22C4_Elements%22)
+- [Video of the final product](https://drive.google.com/drive/folders/1AE9gQe00VmUOt-cTsj99FegoZDUd5Omj?usp=sharing)
+- [Documentation](https://drive.google.com/drive/folders/13Hvu0HvZMFe8924iIHaNt1IoE8Jhh-DD?usp=sharing) 
+- [Dataset](https://drive.google.com/drive/folders/10EfykFGg2A3XUdsAD8U7QPi4LKihlV8W?usp=sharing)
 
 ## References
 
