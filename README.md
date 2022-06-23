@@ -1,8 +1,13 @@
 # LITR
 
 ## About
-The project focuses on finding & realizing effective IT techniques to detect and reduce litter.
-In this project we worked on a prototype that can detect clear plastic bottles that are littered outside. 
+
+As we know, litter is terrible for the environment, and about nine tons of litter end up in the ocean every year. Also, more than 5.25 trillion pieces of garbage are estimated to currently reside in the ocean.
+
+As a group of motivated students that are interested and concerned about the environment, we wanted to make something that would have a positive impact on the environment by combatting litter.
+
+In this project we are trying to combat this by making a product that detects and visualises where clear plastic bottles gather using AI.
+We believe that in the end we were able to deliver a product that would be valuable for the municipalities and cleaning services within the Netherlands.
 A video of the final product can be seen here : https://drive.google.com/drive/folders/1AE9gQe00VmUOt-cTsj99FegoZDUd5Omj?usp=sharing
 
 We used YoloV5 to detect bottles.
