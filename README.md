@@ -10,8 +10,6 @@ In this project we are trying to combat this by making a product that detects an
 
 Our product focuses on the detection of plastic bottles, since this makes up for the most harmful litter and takes a long time to decompose, about 400 to 500 years.
 
-Please reference us when using our project.
-
 ## Shared Folders
 - [Video of the final product](https://drive.google.com/drive/folders/1AE9gQe00VmUOt-cTsj99FegoZDUd5Omj?usp=sharing)
 - [Documentation](https://drive.google.com/drive/folders/13Hvu0HvZMFe8924iIHaNt1IoE8Jhh-DD?usp=sharing) 
@@ -40,18 +38,25 @@ To run the model, we used PyTorch which is an open source machine learning frame
 ### Software
 For our software system, we made the following C4-container-diagram, describing what technologies we use and how each container within the system
 interacts. <br>
-![image](https://user-images.githubusercontent.com/48807736/175287274-602f7094-67cb-498c-a616-2bf37d210eb9.png)
 
-Our sensor runs our custom object detection model for detecting plastic bottles, using a base version of the pre-trained model Yolov5. <br><br>
-The data collected by the model will be sent to the API.<br><br>
-API We figured that Next.js would be a great fit, since a Monolithic application is all we need. <br>
-We want to work on a per-municipality basis, so each municipality has their own API/data. <br>
-This also makes deployment much simpler since Next.js acts as a backend that serves the React SPA to the user, which allows for a single deployment workflow. <br><br>
-For our database, we use PostgreSQL with an ORM called Prisma to query our data using our node backend (Next.js). <br><br>
-Prisma includes a cloud based DBMS, which makes it easy to interact with the data in the browser. <br>
-Within our single-page-application, we use a JavaScript library called Leaflet (in our case, React Leaflet). <br>
-Leaflet allows us to use features like showing grouped markers with litter data on a geographical map. <br>
-
+<table>
+  <tbody>
+    <tr>
+    <td>
+    Our sensor runs our custom object detection model for detecting plastic bottles, using a base version of the pre-trained model Yolov5. <br><br>
+    The data collected by the model will be sent to the API.<br><br>
+    API We figured that Next.js would be a great fit, since a Monolithic application is all we need. <br>
+    We want to work on a per-municipality basis, so each municipality has their own API/data. <br>
+    This also makes deployment much simpler since Next.js acts as a backend that serves the React SPA to the user, which allows for a single deployment workflow. <br><br>
+    For our database, we use PostgreSQL with an ORM called Prisma to query our data using our node backend (Next.js). <br><br>
+    Prisma includes a cloud based DBMS, which makes it easy to interact with the data in the browser. <br><br>
+    Within our single-page-application, we use a JavaScript library called Leaflet (in our case, React Leaflet). <br><br>
+    Leaflet allows us to use features like showing grouped markers with litter data on a geographical map. <br>
+    </td>
+    <td><img src="https://user-images.githubusercontent.com/48807736/175287274-602f7094-67cb-498c-a616-2bf37d210eb9.png"></img></td>
+  </tr>
+ </tbody>
+</table> 
 
 
 
