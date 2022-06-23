@@ -51,6 +51,7 @@ Dataset: https://app.roboflow.com/k-s/litr-eleku/22 <br>
 ## References
 
 1. [TACO](http://tacodataset.org/): Open image dataset of waste in the wild. It contains photos of litter taken under diverse environments, from tropical beaches to London streets
+2. [PlastOPol](https://zenodo.org/record/5829156#.YrRJ2exBzmE): PlastOPol is a one-class labeled dataset, where all the data corresponds to the “litter” class as its super-category.
 
 ## License
 
