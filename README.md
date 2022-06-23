@@ -2,11 +2,14 @@
 
 ## About
 The project focuses on finding & realizing effective IT techniques to detect and reduce litter.
+In this project we worked on a prototype that can detect bottles that are littered outside. 
+A video of the final product can be seen here : https://drive.google.com/drive/folders/1AE9gQe00VmUOt-cTsj99FegoZDUd5Omj?usp=sharing
 
 We used YoloV5 to detect bottles.
 The Jetson AGX Xavier is used to run the model outside.
 Furthermore we used a Serial GPS module connected to the Arduino UNO and a camera mounted on the Jetson Xavier, to retrieve the location and frames data. 
 
+Documentation: https://drive.google.com/drive/folders/13Hvu0HvZMFe8924iIHaNt1IoE8Jhh-DD?usp=sharing
 Dataset: https://app.roboflow.com/k-s/litr-eleku/22
 
 ## Software system
