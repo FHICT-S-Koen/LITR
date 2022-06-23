@@ -44,11 +44,9 @@ Our sensor runs our custom object detection model for detecting plastic bottles,
 The data collected by the model will be sent to the API.<br>
 API We figured that Next.js would be a great fit, since a Monolithic application is all we need. <br>
 We want to work on a per-municipality basis, so each municipality has their own API/data. <br>
-This also makes deployment much simpler since Next.js acts as a backend that serves the React SPA to the user, which allows for a single deployment workflow. 
-<br>
+This also makes deployment much simpler since Next.js acts as a backend that serves the React SPA to the user, which allows for a single deployment workflow. <br>
 For our database, we use PostgreSQL with an ORM called Prisma to query our data using our node backend (Next.js). <br>
 Prisma includes a cloud based DBMS, which makes it easy to interact with the data in the browser. <br>
-
 Within our single-page-application, we use a JavaScript library called Leaflet (in our case, React Leaflet). <br>
 Leaflet allows us to use features like showing grouped markers with litter data on a geographical map. <br>
 
