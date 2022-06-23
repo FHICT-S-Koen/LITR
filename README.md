@@ -10,6 +10,8 @@ In this project we are trying to combat this by making a product that detects an
 
 Our product focuses on the detection of plastic bottles, since this makes up for the most harmful litter and takes a long time to decompose, about 400 to 500 years.
 
+Please reference us when using our project.
+
 ## Shared Folders
 - [Video of the final product](https://drive.google.com/drive/folders/1AE9gQe00VmUOt-cTsj99FegoZDUd5Omj?usp=sharing)
 - [Documentation](https://drive.google.com/drive/folders/13Hvu0HvZMFe8924iIHaNt1IoE8Jhh-DD?usp=sharing) 
