@@ -2,7 +2,7 @@
 
 ## About
 The project focuses on finding & realizing effective IT techniques to detect and reduce litter.
-In this project we worked on a prototype that can detect bottles that are littered outside. 
+In this project we worked on a prototype that can detect clear plastic bottles that are littered outside. 
 A video of the final product can be seen here : https://drive.google.com/drive/folders/1AE9gQe00VmUOt-cTsj99FegoZDUd5Omj?usp=sharing
 
 We used YoloV5 to detect bottles.
